@@ -1,0 +1,203 @@
+<p-card>
+  <div class="flex justify-content-between flex-wrap align-items-center my-1">
+    <div class="font-bold text-4xl text-black border-round m-2">
+      {{ Title }}
+    </div>
+    <div
+      class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
+    >
+      <app-searchbox
+        [AutoCompleteSource$]="AutoCompleteSource$"
+        PlaceHolder="Search"
+        (onSearch)="Search($event)"
+        (onClearClick)="ClearSearch()"
+      >
+      </app-searchbox>
+      <p-button
+        icon="pi pi-plus"
+        label="Add"
+        [rounded]="true"
+        (onClick)="AddClick()"
+      >
+      </p-button>
+    </div>
+  </div>
+
+  <p-table
+    #fTable
+    dataKey="Id"
+    [reorderableColumns]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped p-datatable-gridlines"
+    [value]="PagingSignal().Content"
+    [totalRecords]="PagingSignal().TotalElements"
+    [rows]="PageSize"
+    [paginator]="true"
+    [rowsPerPageOptions]="[10, 20, 30, 50]"
+    [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="'{currentPage} of {totalPages}'"
+    [sortMode]="'multiple'"
+    [globalFilterFields]="['Id', 'ServiceNumber']"
+    [filterDelay]="0"
+    [lazy]="true"
+    (onLazyLoad)="NextPage($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th style="width: 5rem"></th>
+        <th scope="row" pSortableColumn="ServiceNumber" style="width: 25%">
+          <div class="flex justify-content-between align-items-center">
+            ServiceNo
+            <p-sortIcon field="ServiceNumber"></p-sortIcon>
+            <p-columnFilter
+              [showOperator]="false"
+              [showAddButton]="false"
+              [matchModeOptions]="MatchModeOptions"
+              type="text"
+              field="ServiceNumber"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th
+          scope="row"
+          pSortableColumn="ParcelNumber.UnitNumber"
+          style="width: 25%"
+        >
+          <div class="flex justify-content-between align-items-center">
+            ParcelNo
+            <p-sortIcon field="ParcelNumber.UnitNumber"></p-sortIcon>
+            <p-columnFilter
+              [showOperator]="false"
+              [showAddButton]="false"
+              [matchModeOptions]="MatchModeOptions"
+              type="text"
+              field="ParcelNumber.UnitNumber"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th
+          scope="row"
+          pSortableColumn="ParcelNumber.PurchaserName"
+          style="width: 25%"
+        >
+          <div class="flex justify-content-between align-items-center">
+            Name
+            <p-sortIcon field="ParcelNumber.PurchaserName"></p-sortIcon>
+            <p-columnFilter
+              [showOperator]="false"
+              [showAddButton]="false"
+              [matchModeOptions]="MatchModeOptions"
+              type="text"
+              field="ParcelNumber.PurchaserName"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter>
+          </div>
+        </th>
+        <th scope="row" pSortableColumn="Date" style="width: 25%">
+          <div class="flex justify-content-between align-items-center">
+            Date
+          </div>
+        </th>
+        <th scope="row" style="width: 35%">Action</th>
+      </tr>
+    </ng-template>
+
+    <ng-template
+      pTemplate="body"
+      let-iotModel
+      let-expanded="expanded"
+      let-ri="rowIndex"
+    >
+      <tr>
+        <td>
+          <button
+            type="button"
+            pButton
+            [pRowToggler]="iotModel"
+            class="p-button-text p-button-rounded p-button-plain"
+            [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+          ></button>
+        </td>
+        <td>
+          <a (click)="GotoDetails(iotModel.Id)">{{ iotModel.ServiceNumber }}</a>
+        </td>
+        <td>{{ iotModel.ParcelNumber?.UnitNumber }}</td>
+        <td>{{ iotModel.ParcelNumber?.PurchaserName }}</td>
+        <td>{{ iotModel.Date | date : "dd/MM/yyyy" }}</td>
+        <td>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <a (click)="EditClick(iotModel.Id)">Edit</a>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="rowexpansion" let-data>
+      <tr>
+        <td colspan="6">
+          <div class="p-1">
+            <h5>More Info</h5>
+            <div class="grid">
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Smart Door Lock: </label>
+                {{ data?.SmartDoorLock | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Smart Door Bell: </label>
+                {{ data?.SmartDoorbell | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Smart Curtain: </label>
+                {{ data?.SmartCurtain | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Smart Switches: </label>
+                {{ data?.SmartSwitches | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Gateway: </label>
+                {{ data?.Gateway | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>IRBlaster: </label>
+                {{ data?.IRBlaster | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>IRBlaster Serial: </label>
+                {{ data?.IRBlasterSerial }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>RGB LightStrip: </label>
+                {{ data?.RGBLightStrip | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Smart Speaker: </label>
+                {{ data?.SmartSpeaker | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Smart Speaker Serial: </label>
+                {{ data?.SmartSpeakerSerial }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>SmartTv: </label>
+                {{ data?.SmartTv | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Handbook: </label>
+                {{ data?.Handbook | trueFalsePipe }}
+              </div>
+              <div class="col-6 md:col-3 lg:col-3">
+                <label>Remark: </label>
+                {{ data.Remark }}
+              </div>
+            </div>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

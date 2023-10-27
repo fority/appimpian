@@ -1,0 +1,15 @@
+<div class="p-inputgroup flex">
+	<button type="button" pButton icon="pi pi-times" class="p-button-sm p-button-danger" (click)="ClearSearch()"></button>
+	<p-autoComplete
+		class="flex"
+		#searchInput
+		[inputStyle]="{ width: '100%' }"
+		[placeholder]="PlaceHolder"
+		[suggestions]="(FilteredAutoComplete$ | async) || []"
+		(completeMethod)="AutoComplete($event)"
+		(keyup.enter)="EnterKeyPress()"
+		(onSelect)="OnSelect()"
+		(onFocus)="Focus()"
+	></p-autoComplete>
+	<button type="button" pButton icon="pi pi-search" class="p-button-sm" (click)="Search()"></button>
+</div>

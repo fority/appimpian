@@ -1,0 +1,83 @@
+<div class="container">
+  <div class="description">
+    <p-card>
+      <ng-template pTemplate="header">
+        <div class="flex-space-between">
+          <div>
+            Parcel Unit Number -
+            {{ (PagingSource$ | async)?.ParcelNumber?.UnitNumber }}
+          </div>
+          <div class="margin-x">
+            <div class="card">
+              <p-menubar [model]="items"></p-menubar>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="content">
+        <div class="grid">
+          <div class="col-6 md:col-6 lg:col-6">
+            <label for="Name">Name: </label>
+            {{ (PagingSource$ | async)?.ParcelNumber?.PurchaserName }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Date">Date: </label>
+            {{ (PagingSource$ | async)?.Date | date : "dd/MM/yyyy" }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Smart-Door-Lock">Smart Door Lock: </label>
+            {{ (PagingSource$ | async)?.SmartDoorLock | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Smart-Doorbell">Smart Doorbell: </label>
+            {{ (PagingSource$ | async)?.SmartDoorbell | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Smart-Curtain">Smart Curtain: </label>
+            {{ (PagingSource$ | async)?.SmartCurtain | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Smart-Switches">Smart Switches: </label>
+            {{ (PagingSource$ | async)?.SmartSwitches | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="RGB-Light-Strip">RBG Light Strip: </label>
+            {{ (PagingSource$ | async)?.RGBLightStrip | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Gateway">Gateway: </label>
+            {{ (PagingSource$ | async)?.Gateway | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="IRBlaster">IRBlaster: </label>
+            {{ (PagingSource$ | async)?.IRBlaster | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="IRBlaster-Serial">IRBlaster Serial: </label>
+            {{ (PagingSource$ | async)?.IRBlasterSerial }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Smart-Speaker">Smart Speaker: </label>
+            {{ (PagingSource$ | async)?.SmartSpeaker | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Smart-Speaker-Serial">Smart Speaker Serial: </label>
+            {{ (PagingSource$ | async)?.SmartSpeakerSerial }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Smart-Tv">Smart Tv: </label>
+            {{ (PagingSource$ | async)?.SmartTv | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Handbook">Handbook: </label>
+            {{ (PagingSource$ | async)?.Handbook | trueFalsePipe }}
+          </div>
+          <div class="col-12 md:col-6 lg:col-6">
+            <label for="Remark">Remark: </label>
+            {{ (PagingSource$ | async)?.Remark }}
+          </div>
+        </div>
+      </ng-template>
+    </p-card>
+  </div>
+</div>

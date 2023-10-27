@@ -1,0 +1,11 @@
+<div class="signature-container">
+  <signature-pad
+    #signature
+    [options]="signaturePadOptions"
+    (drawStart)="drawStart($event)"
+    (drawEnd)="drawComplete($event)"
+  ></signature-pad>
+  <div>
+    <p-button pRipple label="Clear" [rounded]="true" severity="danger" (click)="clear()"></p-button>
+  </div>
+</div>

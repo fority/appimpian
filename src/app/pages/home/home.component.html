@@ -1,0 +1,49 @@
+<p-card header="Home">
+  <div class="grid">
+    <div class="col-12 md:col-6 lg:col-3 border-round-sm">
+      <p-card header="IOT View" [routerLink]="'/iot/view'">
+        <img [style]="{ cursor: 'pointer' }" src="assets/mdo.svg" width="50" />
+      </p-card>
+    </div>
+  </div>
+</p-card>
+
+<div>
+  <p-card header="Settings">
+    <div class="grid">
+      <div class="col-12 md:col-6 lg:col-3">
+        <p-card header="Parcel" [routerLink]="'/settings/parcel/view'">
+          <img
+            [style]="{ cursor: 'pointer' }"
+            src="assets/npdgroup.svg"
+            width="50"
+          />
+        </p-card>
+      </div>
+      <div class="col-12 md:col-6 lg:col-3">
+        <p-card
+          header="Notification User"
+          [routerLink]="'/settings/notification-user'"
+        >
+          <img
+            [style]="{ cursor: 'pointer' }"
+            src="assets/notif-status.svg"
+            width="50"
+          />
+        </p-card>
+      </div>
+      <div class="col-12 md:col-6 lg:col-3">
+        <p-card
+          header="Manage User"
+          [routerLink]="'/settings/user-manager/view'"
+        >
+          <img
+            [style]="{ cursor: 'pointer' }"
+            src="assets/profile.svg"
+            width="50"
+          />
+        </p-card>
+      </div>
+    </div>
+  </p-card>
+</div>

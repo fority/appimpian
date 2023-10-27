@@ -1,0 +1,63 @@
+<p-card>
+  <div class="flex justify-content-between flex-wrap align-items-center my-1">
+    <div class="font-bold text-4xl text-black border-round m-2">
+      {{ Title }}
+    </div>
+    <div
+      class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
+    >
+      <app-searchbox PlaceHolder="Search"> </app-searchbox>
+      <p-button icon="pi pi-plus" label="Import" [rounded]="true"> </p-button>
+    </div>
+  </div>
+
+  <p-table
+    dataKey="Id"
+    #basicTable
+    [reorderableColumns]="true"
+    [tableStyle]="{ 'min-width': '50rem' }"
+    styleClass="p-datatable-striped p-datatable-gridlines"
+    [value]="PagingSignal().Content"
+    [totalRecords]="PagingSignal().TotalElements"
+    [rows]="PageSize"
+    [paginator]="true"
+    [rowsPerPageOptions]="[10, 20, 30, 50]"
+    [showCurrentPageReport]="true"
+    [currentPageReportTemplate]="'{currentPage} of {totalPages}'"
+    [lazy]="true"
+    (onLazyLoad)="NextPage($event)"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="row" style="width: 25%">Display Name</th>
+        <th scope="row" style="width: 25%">Username</th>
+        <th scope="row" style="width: 25%">Phone</th>
+        <th scope="row" style="width: 25%">Email</th>
+        <th scope="row" style="width: 25%">Address</th>
+        <th scope="row" style="width: 25%">Disable</th>
+        <th scope="row" style="width: 25%">Action</th>
+      </tr>
+    </ng-template>
+
+    <ng-template pTemplate="body" let-iotModel>
+      <tr>
+        <td>{{ iotModel.Name }}</td>
+        <td>{{ iotModel.Username }}</td>
+        <td>{{ iotModel.PhoneNumber }}</td>
+        <td>{{ iotModel.Email }}</td>
+        <td>{{ iotModel.Address }}</td>
+        <td>
+          <p-inputSwitch
+            [(ngModel)]="iotModel.IsDisable"
+            (ngModelChange)="EnableDisableUser($event, iotModel.Id)"
+          ></p-inputSwitch>
+        </td>
+        <td>
+          <div class="flex align-items-center justify-content-center gap-2">
+            <a a (click)="EditClick(iotModel.Id)">Edit</a>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</p-card>

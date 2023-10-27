@@ -1,0 +1,44 @@
+signature-pad {
+  background: transparent;
+}
+
+.signature-container {
+  display: block;
+  max-width: fit-content;
+  align-items: center;
+  margin: 0 auto;
+  overflow-x: scroll;
+
+  div {
+    max-width: 100%;
+    padding: 0.5em 1em;
+    text-align: center;
+
+    button {
+      padding: 0 2em;
+    }
+  }
+}
+
+:host::ng-deep {
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    border-radius: 100vmax;
+    background: #8d99ae;
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #2b2d42;
+  }
+}

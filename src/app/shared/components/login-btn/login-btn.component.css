@@ -1,0 +1,22 @@
+app-login-btn .capsule {
+  position: relative;
+  width: 150px;
+  height: 55px;
+  border-radius: 30px;
+  background: #2b2d42;
+  box-shadow: 0 0 5px 1px #585d61b9;
+}
+
+app-login-btn .capsule .capsule-content {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  display: flex;
+}
+
+app-login-btn .capsule .capsule-content-text {
+  width: 95px;
+  padding: 0 0 0 5px;
+  color: rgb(255, 255, 255);
+  font-size: 1rem;
+}

@@ -1,0 +1,11 @@
+p-menu,
+.sidebar-menu {
+  display: block;
+  width: 100%;
+  border: none;
+}
+
+:host::ng-deep p-menu > .sidebar-menu.p-menu {
+  width: 100%;
+  border: none;
+}

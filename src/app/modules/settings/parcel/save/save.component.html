@@ -1,0 +1,74 @@
+<div class="container">
+  <p-card>
+    <div class="">
+      <h1>{{ !parcelId ? "Create Parcel Number" : "Update Parcel Number" }}</h1>
+    </div>
+    <form [formGroup]="createFormGroup">
+      <div class="field grid">
+        <label for="Unit Number" class="col-12 mb-2 md:col-2 md:mb-0"
+          >Unit Number:
+        </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            id="Unit Number"
+            type="text"
+            placeholder="Please insert Unit Number"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="UnitNumber"
+          />
+        </div>
+      </div>
+      <div class="field grid">
+        <label for="Purchaser" class="col-12 mb-2 md:col-2 md:mb-0"
+          >Purchaser:
+        </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            id="Purchaser"
+            type="text"
+            placeholder="Please insert Purchaser"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="PurchaserName"
+          />
+        </div>
+      </div>
+      <div class="field grid">
+        <label for="Email" class="col-12 mb-2 md:col-2 md:mb-0">Email: </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            id="Email"
+            type="text"
+            placeholder="Please Enter Email"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="Email"
+          />
+        </div>
+      </div>
+      <div class="field grid">
+        <label for="Contact No" class="col-12 mb-2 md:col-2 md:mb-0"
+          >Contact No:
+        </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            id="Contact No"
+            type="text"
+            placeholder="Please Enter Contact No"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="ContactNumber"
+          />
+        </div>
+      </div>
+    </form>
+    <div class="card flex flex-wrap gap-3 justify-content-center">
+      <p-button
+        label="Cancel"
+        [rounded]="true"
+        [style]="{ 'background-color': '#FFF', color: 'black' }"
+        (click)="CancelClick()"
+      ></p-button>
+      <p-button [rounded]="true" (click)="SaveUpdateClick()">{{
+        !parcelId ? "Create" : "Update"
+      }}</p-button>
+    </div>
+  </p-card>
+</div>
