@@ -90,6 +90,7 @@ export class SaveComponent {
   LoadForm() {
     this.iotService.GetById(this.iotId).subscribe((respond) => {
       this.impianFormGroup.patchValue(respond);
+      this.impianFormGroup.get('ParcelNumberId')?.patchValue(respond.ParcelNumber?.Id);
     });
     this.impianFormGroup.get('Id')?.enable();
     this.impianFormGroup.get('IRBlasterSerial')?.enable();
