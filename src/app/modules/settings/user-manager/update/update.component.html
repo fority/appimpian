@@ -1,1 +1,62 @@
-<p>update works!</p>
+<div class="container">
+  <p-card>
+    <div class="">
+      <h1>
+        Profile <span class="pi pi-user-edit" style="font-size: 1.5rem"></span>
+      </h1>
+    </div>
+    <form [formGroup]="createFormGroup">
+      <div class="field grid">
+        <label class="col-12 mb-2 md:col-2 md:mb-0"
+          ><span class="text-red-400">*</span>Name:
+        </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="Name"
+          />
+        </div>
+      </div>
+      <div class="field grid">
+        <label class="col-12 mb-2 md:col-2 md:mb-0">Phone Number: </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="PhoneNumber"
+          />
+        </div>
+      </div>
+      <div class="field grid">
+        <label class="col-12 mb-2 md:col-2 md:mb-0">Email: </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="Email"
+          />
+        </div>
+      </div>
+      <div class="field grid">
+        <label class="col-12 mb-2 md:col-2 md:mb-0">Address: </label>
+        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+          <input
+            type="text"
+            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            formControlName="Address"
+          />
+        </div>
+      </div>
+    </form>
+    <div class="card flex flex-wrap gap-3 justify-content-center">
+      <p-button
+        label="Cancel"
+        [rounded]="true"
+        [style]="{ 'background-color': '#FFF', color: 'black' }"
+        (click)="CancelClick()"
+      ></p-button>
+      <p-button [rounded]="true" (click)="SaveUpdateClick()">Update</p-button>
+    </div>
+  </p-card>
+</div>

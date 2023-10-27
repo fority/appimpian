@@ -6,7 +6,7 @@
     <form [formGroup]="createFormGroup">
       <div class="field grid">
         <label for="Unit Number" class="col-12 mb-2 md:col-2 md:mb-0"
-          >Unit Number:
+          ><span class="text-red-400">*</span>Unit Number:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -20,7 +20,7 @@
       </div>
       <div class="field grid">
         <label for="Purchaser" class="col-12 mb-2 md:col-2 md:mb-0"
-          >Purchaser:
+          ><span class="text-red-400">*</span>Purchaser:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -33,7 +33,9 @@
         </div>
       </div>
       <div class="field grid">
-        <label for="Email" class="col-12 mb-2 md:col-2 md:mb-0">Email: </label>
+        <label for="Email" class="col-12 mb-2 md:col-2 md:mb-0"
+          ><span class="text-red-400">*</span>Email:
+        </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
             id="Email"
@@ -46,7 +48,7 @@
       </div>
       <div class="field grid">
         <label for="Contact No" class="col-12 mb-2 md:col-2 md:mb-0"
-          >Contact No:
+          ><span class="text-red-400">*</span>Contact No:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input

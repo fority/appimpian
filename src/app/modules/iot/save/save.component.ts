@@ -11,9 +11,10 @@ import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
 import { map } from 'rxjs';
-import { ValidateForm } from 'src/app/core/utils/helpers';
+import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { IotService } from 'src/app/services/iot.service';
 import { ParcelService } from 'src/app/services/parcel.service';
 import { IOTSetupTrans } from '../models/iot';
@@ -33,6 +34,7 @@ import { SignatureComponent } from '../signature/signature.component';
     SignatureComponent,
     ButtonModule,
     FormsModule,
+    CheckboxModule,
   ],
 })
 export class SaveComponent {
@@ -80,6 +82,17 @@ export class SaveComponent {
     if (this.activatedRoute.snapshot.params['id']) {
       this.iotId = this.activatedRoute.snapshot.params['id'];
       this.isUpdate = true;
+      this.impianFormGroup.get('ParcelNumberId')?.disable();
+      this.impianFormGroup.get('SmartDoorLock')?.disable();
+      this.impianFormGroup.get('SmartDoorbell')?.disable();
+      this.impianFormGroup.get('SmartCurtain')?.disable();
+      this.impianFormGroup.get('SmartSwitches')?.disable();
+      this.impianFormGroup.get('RGBLightStrip')?.disable();
+      this.impianFormGroup.get('SmartTv')?.disable();
+      this.impianFormGroup.get('Gateway')?.disable();
+      this.impianFormGroup.get('SmartSpeaker')?.disable();
+      this.impianFormGroup.get('Handbook')?.disable();
+
       this.LoadForm();
     } else {
       this.isUpdate = false;
@@ -90,7 +103,9 @@ export class SaveComponent {
   LoadForm() {
     this.iotService.GetById(this.iotId).subscribe((respond) => {
       this.impianFormGroup.patchValue(respond);
-      this.impianFormGroup.get('ParcelNumberId')?.patchValue(respond.ParcelNumber?.Id);
+      this.impianFormGroup
+        .get('ParcelNumberId')
+        ?.patchValue(respond.ParcelNumber?.Id);
     });
     this.impianFormGroup.get('Id')?.enable();
     this.impianFormGroup.get('IRBlasterSerial')?.enable();
@@ -100,8 +115,17 @@ export class SaveComponent {
 
   SaveUpdateClick() {
     console.log(this.isUpdate);
+    let text: Set<string> = new Set();
+
     if (!ValidateForm(this.impianFormGroup)) {
-      return;
+      const invalidField = ValidateInvalidField(this.impianFormGroup);
+      invalidField.forEach((res) => text.add(res));
+
+      return this.messageService.add({
+        severity: 'error',
+        summary: 'Please fill up the form!',
+        detail: '' + [...text],
+      });
     }
     if (!this.isUpdate) {
       if (!this.signComp.GetDrawDataUrl()) {
@@ -127,5 +151,12 @@ export class SaveComponent {
 
   CancelClick() {
     this.location.back();
+  }
+
+  get validateName() {
+    return (
+      this.impianFormGroup.get('ParcelNumberId')?.invalid &&
+      this.impianFormGroup.get('ParcelNumberId')?.dirty
+    );
   }
 }

@@ -1,11 +1,14 @@
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { Observable } from 'rxjs';
+import { Observable, catchError } from 'rxjs';
 import { PagingContent, SelectOption } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UserProfileService } from 'src/app/services/userProfile.service';
@@ -24,6 +27,8 @@ import { MANAGER_MODULE } from '../user-manager.config';
     TableModule,
     FormsModule,
     InputSwitchModule,
+    DialogModule,
+    DropdownModule,
   ],
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.less'],
@@ -35,10 +40,12 @@ export class ViewUserComponent {
   Page: number = 1;
   PageSize: number = 10;
   SearchTextNgModel: string = '';
+  isVisible = false;
 
   private userProfileService = inject(UserProfileService);
   private loadingService = inject(LoadingService);
   private router = inject(Router);
+  private messageService = inject(MessageService);
 
   AutoCompleteSource$: Observable<string[]> =
     this.userProfileService.AutoCompleteList();
@@ -87,19 +94,68 @@ export class ViewUserComponent {
   }
 
   EnableDisableUser(event: boolean, id: string) {
-    let service;
-    service = !event
-      ? this.userProfileService.Enable(id)
-      : this.userProfileService.Disable(id);
-    service.subscribe((respond) => {
-      if (respond) {
+    if (event) {
+      this.userProfileService.Enable(id).subscribe((x) => {
         this.listOfData.forEach((res) => {
           if (res.Id === id) {
             res.IsDisable = event;
           }
         });
-      }
-    });
+      });
+    } else {
+      this.userProfileService.Disable(id).subscribe((x) => {
+        this.listOfData.forEach((res) => {
+          if (res.Id === id) {
+            res.IsDisable = event;
+          }
+        });
+      });
+    }
+
+    // let service;
+    // service = !event
+    //   ? this.userProfileService.Enable(id)
+    //   : this.userProfileService.Disable(id);
+    // service.subscribe((respond) => {
+    //   if (respond) {
+    //     this.listOfData.forEach((res) => {
+    //       if (res.Id === id) {
+    //         res.IsDisable = event;
+    //       }
+    //     });
+    //   }
+    // });
+  }
+
+  ShowModal() {
+    this.isVisible = true;
+  }
+
+  CloseModal() {
+    this.isVisible = false;
+  }
+
+  ImportUser() {
+    if (!this.userSelected || this.userSelected == '') {
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Please select to import!',
+      });
+      return;
+    }
+    this.userProfileService
+      .ImportUser(this.userSelected)
+      .pipe(
+        catchError(() => {
+          throw new Error('Import failed!');
+        })
+      )
+      .subscribe((respond) => {
+        this.LoadData();
+        this.isVisible = false;
+        this.userSelected = '';
+      });
   }
 
   EditClick = (id: string) =>
@@ -119,41 +175,8 @@ export class ViewUserComponent {
   //       });
   //   }
 
-  //   ImportUser() {
-  //     if (!this.userSelected || this.userSelected == '') {
-  //       this.notif.WarningNotice('Please select to import!');
-  //       return;
-  //     }
-  //     this.userProfileService
-  //       .ImportUser(this.userSelected)
-  //       .pipe(
-  //         catchError(() => {
-  //           throw new Error('Import failed!');
-  //         })
-  //       )
-  //       .subscribe((respond) => {
-  //         if (respond.Success) {
-  //           this.GetData();
-  //           this.isVisible = false;
-  //           this.userSelected = '';
-  //         }
-  //       });
-  //   }
-
-  //   ShowModal() {
-  //     this.isVisible = true;
-  //   }
-
-  //   CloseModal() {
-  //     this.isVisible = false;
-  //   }
-
   //   CreateClick() {
   //     this.router.navigate([`/user-manager/create-update`]);
-  //   }
-
-  //   EditClick(id: string) {
-  //     this.router.navigate(['/user-manager/update/' + id]);
   //   }
 
   //   PageIndexChange($event: any) {

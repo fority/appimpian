@@ -7,7 +7,13 @@
       class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
     >
       <app-searchbox PlaceHolder="Search"> </app-searchbox>
-      <p-button icon="pi pi-plus" label="Import" [rounded]="true"> </p-button>
+      <p-button
+        icon="pi pi-plus"
+        label="Import"
+        [rounded]="true"
+        (click)="ShowModal()"
+      >
+      </p-button>
     </div>
   </div>
 
@@ -61,3 +67,39 @@
     </ng-template>
   </p-table>
 </p-card>
+
+<p-dialog
+  [(visible)]="isVisible"
+  [draggable]="false"
+  [resizable]="false"
+  header="Import User"
+>
+  <div class="flex flex-column">
+    <label><span class="text-red-400">*</span>User</label>
+    <p-dropdown
+      appendTo="body"
+      placeholder="Select user"
+      [options]="(userSelection$ | async) || []"
+      [(ngModel)]="userSelected"
+      (onClick)="LoadData()"
+    ></p-dropdown>
+  </div>
+  <ng-template pTemplate="footer">
+    <div class="flex flex-row justify-content-end">
+      <div class="cancel">
+        <p-button
+          (click)="CloseModal()"
+          label="Cancel"
+          styleClass="p-button-text"
+        ></p-button>
+      </div>
+      <div class="ok">
+        <p-button
+          (click)="ImportUser()"
+          label="OK"
+          styleClass="p-button-text"
+        ></p-button>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

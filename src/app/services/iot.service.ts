@@ -33,13 +33,4 @@ export class IotService extends BaseSettingsService<IOTSetupTrans> {
       .get(`${this.ApiUrl}/ResendEmail`, { ...blobOptions })
       .pipe(shareReplay(5));
   }
-
-  // SetModelId(text: string) {
-  //   localStorage.setItem('modelId', text);
-  // }
-
-  // GetModelId() {
-  //   const x = localStorage.getItem('modelId');
-  //   return x || undefined;
-  // }
 }

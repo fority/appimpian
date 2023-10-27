@@ -1,12 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, ViewEncapsulation, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  EventEmitter,
+  Input,
+  Output,
+  ViewEncapsulation,
+  inject,
+} from '@angular/core';
 import { Router, RouterModule } from '@angular/router';
 import { MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { MenuModule } from 'primeng/menu';
 import { SidebarModule } from 'primeng/sidebar';
 import { take } from 'rxjs';
-import { DownloadFile } from 'src/app/core/utils/helpers';
+import { IotService } from 'src/app/services/iot.service';
 
 import { RoleService } from 'src/app/services/role.service';
 
@@ -15,7 +23,13 @@ interface CustomMenuItem extends MenuItem {
 }
 @Component({
   standalone: true,
-  imports: [CommonModule, RouterModule, SidebarModule, MenuModule, ButtonModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    SidebarModule,
+    MenuModule,
+    ButtonModule,
+  ],
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.css'],
@@ -29,6 +43,7 @@ export class SidebarComponent {
   userRoles: string[] = [];
 
   private router = inject(Router);
+  private iotService = inject(IotService);
   readonly roleService = inject(RoleService);
 
   SideMenuItems: CustomMenuItem[] = [
@@ -39,46 +54,34 @@ export class SidebarComponent {
         {
           label: 'View',
           command: () => {
-            // this.router.navigateByUrl('/cpi');
+            this.router.navigateByUrl('/iot/view');
           },
         },
-        // {
-        //   label: 'Manage CPI',
-        //   command: () => {
-        //     // this.router.navigateByUrl('/cpi/manage');
-        //   },
-        // },
       ],
     },
     {
       label: 'Setting',
       visible: true,
-      // roles: [''],
+      roles: ['DKMY.Impian.Admin'],
       items: [
         {
           label: 'Parcel',
           command: () => {
-            // this.router.navigateByUrl('/settings/region');
+            this.router.navigateByUrl('/settings/parcel/view');
           },
         },
         {
           label: 'Notification User',
           command: () => {
-            // this.router.navigateByUrl('/settings/partname');
+            this.router.navigateByUrl('/settings/notification-user');
           },
         },
         {
           label: 'Manage User',
           command: () => {
-            // this.router.navigateByUrl('/settings/customer');
+            this.router.navigateByUrl('/settings/user-manager/view');
           },
-        }
-        // {
-        //   label: 'Export To Excel',
-        //   command: () => {
-
-        //   },
-        // }
+        },
       ],
     },
   ];
@@ -92,7 +95,8 @@ export class SidebarComponent {
     });
   }
 
-  IsVisible = (roles: string[]) => roles?.some((role) => this.userRoles.includes(role));
+  IsVisible = (roles: string[]) =>
+    roles?.some((role) => this.userRoles.includes(role));
 
   HideSideBar = () => this.HideSideBarEmitter.emit();
 }

@@ -81,7 +81,6 @@ export class ViewComponent implements OnInit {
   Search(data: string) {
     this.SearchTextNgModel = data;
     this.Page = 1;
-    // this.iotService.SetModelId(this.SearchTextNgModel);
     this.FilterText = 'Id|ServiceNumber@=' + this.SearchTextNgModel;
     this.ResetTable();
     this.LoadData();

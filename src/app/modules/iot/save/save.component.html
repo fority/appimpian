@@ -6,7 +6,7 @@
     <form [formGroup]="impianFormGroup">
       <div class="field grid">
         <label for="ParcelNumberId" class="col-12 mb-2 md:col-2 md:mb-0"
-          >Parcel No:
+          ><span class="text-red-400">*</span>Parcel No:
         </label>
         <div class="col-12 md:col-10">
           <p-dropdown
@@ -22,67 +22,87 @@
       </div>
       <div class="formgroup-inline">
         <div class="field-checkbox col">
-          <input
-            type="checkbox"
-            id="SmartDoorLock"
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
             formControlName="SmartDoorLock"
-          />
+          >
+          </p-checkbox>
           <label for="SmartDoorLock">Smart Door Lock</label>
         </div>
         <div class="field-checkbox col">
-          <input
-            type="checkbox"
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
             id="SmartDoorbell"
             formControlName="SmartDoorbell"
-          />
+          >
+          </p-checkbox>
           <label for="SmartDoorbell">Smart Doorbell</label>
         </div>
       </div>
       <div class="formgroup-inline">
         <div class="field-checkbox col">
-          <input
-            type="checkbox"
-            id="SmartCurtain"
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
             formControlName="SmartCurtain"
-          />
+          >
+          </p-checkbox>
           <label for="SmartCurtain">Smart Curtain</label>
         </div>
         <div class="field-checkbox col">
-          <input
-            type="checkbox"
-            id="SmartSwitches"
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
             formControlName="SmartSwitches"
-          />
+          >
+          </p-checkbox>
           <label for="SmartSwitches">Smart Switches</label>
         </div>
       </div>
       <div class="formgroup-inline">
         <div class="field-checkbox col">
-          <input
-            type="checkbox"
-            id="RGBLightStrip"
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
             formControlName="RGBLightStrip"
-          />
+          ></p-checkbox>
           <label for="RGBLightStrip">RGB LightStrip</label>
         </div>
         <div class="field-checkbox col">
-          <input type="checkbox" id="SmartTv" formControlName="SmartTv" />
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
+            formControlName="SmartTv"
+          >
+          </p-checkbox>
           <label for="SmartTv">SmartTv</label>
         </div>
       </div>
       <div class="formgroup-inline">
         <div class="field-checkbox col">
-          <input type="checkbox" id="Gateway" formControlName="Gateway" />
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
+            formControlName="Gateway"
+          >
+          </p-checkbox>
           <label for="Gateway">Gateway</label>
         </div>
         <div class="field-checkbox col">
-          <input type="checkbox" id="IRBlaster" formControlName="IRBlaster" />
+          <p-checkbox
+            [binary]="true"
+            inputId="binary"
+            formControlName="IRBlaster"
+          >
+          </p-checkbox>
           <label for="IRBlaster">IRBlaster </label>
         </div>
       </div>
       <div class="field grid">
         <label for="IRBlasterSerial" class="col-12 mb-2 md:col-2 md:mb-0"
-          >IRBlaster Serial:
+          ><span class="text-red-400">*</span>IRBlaster Serial:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -95,16 +115,17 @@
         </div>
       </div>
       <div class="field-checkbox">
-        <input
-          type="checkbox"
-          id="SmartSpeaker"
+        <p-checkbox
+          [binary]="true"
+          inputId="binary"
           formControlName="SmartSpeaker"
-        />
+        >
+        </p-checkbox>
         <label for="SmartSpeaker">Smart Speaker</label>
       </div>
       <div class="field grid">
         <label for="SmartSpeakerSerial" class="col-12 mb-2 md:col-2 md:mb-0"
-          >Smart Speaker Serial:
+          ><span class="text-red-400">*</span>Smart Speaker Serial:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -117,7 +138,11 @@
         </div>
       </div>
       <div class="field-checkbox">
-        <input type="checkbox" id="Handbook" formControlName="Handbook" />
+        <p-checkbox
+          [binary]="true"
+          inputId="binary"
+          formControlName="Handbook"
+        ></p-checkbox>
         <label for="Handbook">Handbook</label>
       </div>
       <div class="field grid">
@@ -139,10 +164,10 @@
           for="Signature"
           class="col-12 mb-2 md:col-2 md:mb-0"
           *ngIf="!isUpdate"
-          >Signature:
+          ><span class="text-red-400">*</span>Signature:
         </label>
       </div>
-      <app-signature #appSign></app-signature>
+      <app-signature *ngIf="!isUpdate" #appSign></app-signature>
     </form>
     <div class="card flex flex-wrap gap-3 justify-content-center">
       <p-button
