@@ -13,20 +13,20 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { CheckboxModule } from 'primeng/checkbox';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToolbarModule } from 'primeng/toolbar';
 import { map } from 'rxjs';
 import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { IotService } from 'src/app/services/iot.service';
 import { ParcelService } from 'src/app/services/parcel.service';
 import { IOTSetupTransDto } from '../models/iot';
 import { SignatureComponent } from '../signature/signature.component';
-
 @Component({
   selector: 'app-save',
   standalone: true,
   templateUrl: './save.component.html',
   styleUrls: ['./save.component.less'],
   imports: [
-    CommonModule,
+    CommonModule, ToolbarModule,
     CardModule,
     ReactiveFormsModule,
     FormsModule,
@@ -50,12 +50,10 @@ export class SaveComponent {
   iotId = '';
   isUpdate: boolean = false;
   ParcelNumberId = '';
+  Title = '';
 
-  ParcelNoSource$ = this.parcelService
-    .Get(1, 10000)
-    .pipe(
-      map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id })))
-    );
+
+  ParcelNoSource$ = this.parcelService.Get(1, 10000).pipe(map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id }))));
 
   constructor() {
     this.impianFormGroup = new FormGroup({
@@ -92,10 +90,11 @@ export class SaveComponent {
       this.impianFormGroup.get('Gateway')?.disable();
       this.impianFormGroup.get('SmartSpeaker')?.disable();
       this.impianFormGroup.get('Handbook')?.disable();
-
+      this.Title = "Update IOT Setup";
       this.LoadForm();
     } else {
       this.isUpdate = false;
+      this.Title = "Create IOT Setup";
       this.impianFormGroup.get('Id')?.disable();
     }
   }
