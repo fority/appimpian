@@ -9,27 +9,18 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { Observable, catchError } from 'rxjs';
-import { PagingContent, SelectOption } from 'src/app/core/models/sharedModels';
+import { Observable, catchError, map } from 'rxjs';
+import { PagingContent } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UserProfileService } from 'src/app/services/userProfile.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
 import { UserProfileDto } from '../../models/userProfile';
 
 @Component({
-  selector: 'app-view :not(p)',
+  selector: 'app-view',
   standalone: true,
-  imports: [
-    CommonModule,
-    CardModule,
-    SearchboxComponent,
-    ButtonModule,
-    TableModule,
-    FormsModule,
-    InputSwitchModule,
-    DialogModule,
-    DropdownModule,
-  ],
+  imports: [CommonModule, CardModule, SearchboxComponent, ButtonModule, TableModule, FormsModule, InputSwitchModule,
+    DialogModule, DropdownModule],
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.less'],
 })
@@ -47,15 +38,10 @@ export class ViewUserComponent {
   private router = inject(Router);
   private messageService = inject(MessageService);
 
-  AutoCompleteSource$: Observable<string[]> =
-    this.userProfileService.AutoCompleteList();
-  PagingSignal = signal<PagingContent<UserProfileDto>>(
-    {} as PagingContent<UserProfileDto>
-  );
+  AutoCompleteSource$: Observable<string[]> = this.userProfileService.AutoCompleteList();
+  PagingSignal = signal<PagingContent<UserProfileDto>>({} as PagingContent<UserProfileDto>);
 
-  userSelection$: Observable<SelectOption<string>[]> =
-    this.userProfileService.GetSelectOption('Username', 'Id');
-
+  userSelection$ = this.userProfileService.Get(1, 10000).pipe(map(x => x.Content.map(x => ({ label: x.Name, value: x.Id }))));
   userSelected = '';
 
   ngOnInit() {
