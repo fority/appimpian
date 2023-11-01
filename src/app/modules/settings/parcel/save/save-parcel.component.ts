@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   FormControl,
@@ -19,13 +19,12 @@ import {
   CreateParcelRequest,
   UpdateParcelRequest,
 } from '../../models/parcel-no';
-import { IOT_MODULE } from '../parcel.config';
 
 @Component({
   selector: 'app-save',
   standalone: true,
   imports: [
-    IOT_MODULE,
+    CommonModule,
     CardModule,
     ReactiveFormsModule,
     FormsModule,

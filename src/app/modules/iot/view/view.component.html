@@ -37,7 +37,7 @@
     [showCurrentPageReport]="true"
     [currentPageReportTemplate]="'{currentPage} of {totalPages}'"
     [sortMode]="'multiple'"
-    [globalFilterFields]="['Id', 'ServiceNumber']"
+    [globalFilterFields]="['ServiceNumber', 'ParcelNumber.UnitNumber']"
     [filterDelay]="0"
     [lazy]="true"
     (onLazyLoad)="NextPage($event)"
@@ -48,7 +48,6 @@
         <th scope="row" pSortableColumn="ServiceNumber" style="width: 25%">
           <div class="flex justify-content-between align-items-center">
             ServiceNo
-            <p-sortIcon field="ServiceNumber"></p-sortIcon>
             <p-columnFilter
               [showOperator]="false"
               [showAddButton]="false"
@@ -60,14 +59,9 @@
             ></p-columnFilter>
           </div>
         </th>
-        <th
-          scope="row"
-          pSortableColumn="ParcelNumber.UnitNumber"
-          style="width: 25%"
-        >
+        <th scope="row" style="width: 25%">
           <div class="flex justify-content-between align-items-center">
             ParcelNo
-            <p-sortIcon field="ParcelNumber.UnitNumber"></p-sortIcon>
             <p-columnFilter
               [showOperator]="false"
               [showAddButton]="false"
@@ -79,14 +73,9 @@
             ></p-columnFilter>
           </div>
         </th>
-        <th
-          scope="row"
-          pSortableColumn="ParcelNumber.PurchaserName"
-          style="width: 25%"
-        >
+        <th scope="row" style="width: 25%">
           <div class="flex justify-content-between align-items-center">
             Name
-            <p-sortIcon field="ParcelNumber.PurchaserName"></p-sortIcon>
             <p-columnFilter
               [showOperator]="false"
               [showAddButton]="false"
@@ -98,7 +87,7 @@
             ></p-columnFilter>
           </div>
         </th>
-        <th scope="row" pSortableColumn="Date" style="width: 25%">
+        <th scope="row" style="width: 25%">
           <div class="flex justify-content-between align-items-center">
             Date
           </div>

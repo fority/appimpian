@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -13,14 +14,13 @@ import { PagingContent, SelectOption } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UserProfileService } from 'src/app/services/userProfile.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
-import { UserProfile } from '../../models/userProfile';
-import { MANAGER_MODULE } from '../user-manager.config';
+import { UserProfileDto } from '../../models/userProfile';
 
 @Component({
   selector: 'app-view :not(p)',
   standalone: true,
   imports: [
-    MANAGER_MODULE,
+    CommonModule,
     CardModule,
     SearchboxComponent,
     ButtonModule,
@@ -36,7 +36,7 @@ import { MANAGER_MODULE } from '../user-manager.config';
 export class ViewUserComponent {
   Title: string = 'User Manager';
 
-  listOfData = [] as UserProfile[];
+  listOfData = [] as UserProfileDto[];
   Page: number = 1;
   PageSize: number = 10;
   SearchTextNgModel: string = '';
@@ -49,8 +49,8 @@ export class ViewUserComponent {
 
   AutoCompleteSource$: Observable<string[]> =
     this.userProfileService.AutoCompleteList();
-  PagingSignal = signal<PagingContent<UserProfile>>(
-    {} as PagingContent<UserProfile>
+  PagingSignal = signal<PagingContent<UserProfileDto>>(
+    {} as PagingContent<UserProfileDto>
   );
 
   userSelection$: Observable<SelectOption<string>[]> =
@@ -93,8 +93,9 @@ export class ViewUserComponent {
     this.LoadData();
   }
 
-  EnableDisableUser(event: boolean, id: string) {
-    if (event) {
+  EnableDisableUser(event: boolean = false, id: string) {
+    if (!event) {
+      console.log(event);
       this.userProfileService.Enable(id).subscribe((x) => {
         this.listOfData.forEach((res) => {
           if (res.Id === id) {
@@ -111,20 +112,6 @@ export class ViewUserComponent {
         });
       });
     }
-
-    // let service;
-    // service = !event
-    //   ? this.userProfileService.Enable(id)
-    //   : this.userProfileService.Disable(id);
-    // service.subscribe((respond) => {
-    //   if (respond) {
-    //     this.listOfData.forEach((res) => {
-    //       if (res.Id === id) {
-    //         res.IsDisable = event;
-    //       }
-    //     });
-    //   }
-    // });
   }
 
   ShowModal() {
@@ -145,7 +132,7 @@ export class ViewUserComponent {
       return;
     }
     this.userProfileService
-      .ImportUser(this.userSelected)
+      .FxtImportUser(this.userSelected)
       .pipe(
         catchError(() => {
           throw new Error('Import failed!');
@@ -160,75 +147,4 @@ export class ViewUserComponent {
 
   EditClick = (id: string) =>
     this.router.navigate([`/settings/user-manager/update/${id}`]);
-
-  //   GetData() {
-  //     this.pageSettings = { page: this.page, pageSize: this.pageSize, filter: this.searchFilterText, sort: this.searchSortText };
-  //     this.userProfileService
-  //       .GetAdvancedFilter(this.pageSettings)
-  //       .subscribe((respond: BaseResponseWithData<PagingContent<UserProfile>>) => {
-  //         const _thread = respond.Data;
-  //         if (respond.Success) {
-  //           this.listOfData = [];
-  //           this.listOfData = _thread.Content;
-  //           this.totalItem = _thread.TotalElements;
-  //         }
-  //       });
-  //   }
-
-  //   CreateClick() {
-  //     this.router.navigate([`/user-manager/create-update`]);
-  //   }
-
-  //   PageIndexChange($event: any) {
-  //     this.page = $event;
-  //     this.GetData();
-  //   }
-
-  //   PageSizeChange($event: any) {
-  //     this.pageSize = $event;
-  //     this.GetData();
-  //   }
-
-  //   //#region Search
-  //   searchFilterText = '';
-  //   searchSortText = this.DEFAULT_SORT;
-  //   tableHeaders = [] as SortTableModelType[];
-
-  //   SortByColumn(header: SortTableModelType, $event: string) {
-  //     this.page = 1;
-  //     header.assignSortBy($event);
-  //     this.searchSortText = this.sortingService.SortByColumn();
-  //     this.GetData();
-  //   }
-
-  //   FilterByColumn(header: SortTableModelType, $event: string) {
-  //     this.page = 1;
-  //     header.assignFilterBy($event);
-  //     this.searchFilterText = this.sortingService.FilterByColumn();
-  //     this.GetData();
-  //   }
-
-  //   onSearch($event: string) {
-  //     this.page = 1;
-  //     this.onSortClear();
-  //     this.searchFilterText = this.sortingService.SearchAll($event);
-  //     this.GetData();
-  //   }
-
-  //   onSortClear() {
-  //     this.searchFilterText = '';
-  //     this.searchSortText = this.DEFAULT_SORT;
-  //     this.tableHeaders = this.sortingService.ResetHeader();
-  //   }
-
-  //   onClear() {
-  //     this.ResetPage();
-  //   }
-
-  //   ResetPage() {
-  //     this.page = 1;
-  //     this.onSortClear();
-  //     this.GetData();
-  //   }
-  //   //#endregion
 }

@@ -1,4 +1,4 @@
-export interface ParcelNumber {
+export interface ParcelNumberDto {
   Id: string;
   UnitNumber: string;
   PurchaserName: string;

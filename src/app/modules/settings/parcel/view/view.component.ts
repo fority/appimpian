@@ -1,5 +1,6 @@
 import { ParcelService } from 'src/app/services/parcel.service';
 
+import { CommonModule } from '@angular/common';
 import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
@@ -9,14 +10,13 @@ import { Observable } from 'rxjs';
 import { PagingContent } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
-import { ParcelNumber } from '../../models/parcel-no';
-import { IOT_MODULE } from '../parcel.config';
+import { ParcelNumberDto } from '../../models/parcel-no';
 
 @Component({
   selector: 'app-view',
   standalone: true,
   imports: [
-    IOT_MODULE,
+    CommonModule,
     CardModule,
     SearchboxComponent,
     ButtonModule,
@@ -39,8 +39,8 @@ export class ViewComponent implements OnInit {
 
   AutoCompleteSource$: Observable<string[]> =
     this.parcelService.AutoCompleteList();
-  PagingSignal = signal<PagingContent<ParcelNumber>>(
-    {} as PagingContent<ParcelNumber>
+  PagingSignal = signal<PagingContent<ParcelNumberDto>>(
+    {} as PagingContent<ParcelNumberDto>
   );
 
   ngOnInit() {

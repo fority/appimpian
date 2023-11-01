@@ -1,7 +1,7 @@
 import { UserType } from 'src/app/shared/enum/enum';
-import { Region } from './region';
+import { RegionDto } from './region';
 
-export interface UserProfile {
+export interface UserProfileDto {
   Id: string;
   Username: string;
   Name: string;
@@ -9,7 +9,7 @@ export interface UserProfile {
   Email: string;
   Address: string;
   RegionId: string;
-  Region: Region;
+  Region: RegionDto;
   UserType: UserType;
   IsDisable: boolean;
   AllPermission: boolean;
@@ -59,4 +59,25 @@ export interface ChangePasswordRequest {
   Id: string;
   Password: string;
   ConfirmPassword: string;
+}
+export interface FxtIdServerUserDto {
+  Id: string;
+  UserName: string | null;
+  Email: string | null;
+  EmailConfirmed: boolean;
+  PhoneNumber: string | null;
+  PhoneNumberConfirmed: boolean;
+  TwoFactorEnabled: boolean;
+  LockoutEnd: Date | string | null;
+  LockoutEnabled: boolean;
+  AccessFailedCount: number;
+  FirstName: string;
+  LastName: string;
+  DisplayName: string;
+  Department: string | null;
+  StaffId: string | null;
+  Remark: string | null;
+  Disable: boolean;
+  Confirm: boolean;
+  Photo: string | null;
 }

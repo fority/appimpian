@@ -1,0 +1,9 @@
+{
+  "prettier.printWidth": 9999,
+  "prettier.bracketSameLine": false,
+  "prettier.proseWrap": "preserve",
+  "prettier.tabWidth": 2,
+  "prettier.useTabs": false,
+  "diffEditor.wordWrap": "off",
+  "prettier.enable": true
+}

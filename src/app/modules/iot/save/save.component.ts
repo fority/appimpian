@@ -17,7 +17,7 @@ import { map } from 'rxjs';
 import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { IotService } from 'src/app/services/iot.service';
 import { ParcelService } from 'src/app/services/parcel.service';
-import { IOTSetupTrans } from '../models/iot';
+import { IOTSetupTransDto } from '../models/iot';
 import { SignatureComponent } from '../signature/signature.component';
 
 @Component({
@@ -46,7 +46,7 @@ export class SaveComponent {
   private messageService = inject(MessageService);
 
   impianFormGroup: FormGroup;
-  iot = {} as IOTSetupTrans;
+  iot = {} as IOTSetupTransDto;
   iotId = '';
   isUpdate: boolean = false;
   ParcelNumberId = '';

@@ -9,7 +9,7 @@ import { DownloadFile } from 'src/app/core/utils/helpers';
 import { TrueFalsePipe } from 'src/app/shared/pipes/truefalse.pipe';
 import { IotService } from '../../../services/iot.service';
 import { LoadingService } from './../../../services/loading.service';
-import { IOTSetupTrans } from './../models/iot';
+import { IOTSetupTransDto } from './../models/iot';
 
 @Component({
   selector: 'app-details',
@@ -23,7 +23,7 @@ export class DetailsComponent implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
   private loadingService = inject(LoadingService);
 
-  PagingSource$: Observable<IOTSetupTrans> = of();
+  PagingSource$: Observable<IOTSetupTransDto> = of();
 
   iotId = '';
   items: MenuItem[] | undefined;

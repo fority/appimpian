@@ -1,13 +1,13 @@
 import { ExpandableRow } from 'src/app/core/models/sharedModels';
-import { ParcelNumber } from '../../settings/models/parcel-no';
+import { ParcelNumberDto } from '../../settings/models/parcel-no';
 
-export interface IOTSetupTrans extends ExpandableRow {
+export interface IOTSetupTransDto extends ExpandableRow {
   Success: any;
   Data: any;
   Id: string;
   ServiceNumber: string;
   Date: Date;
-  ParcelNumber?: ParcelNumber;
+  ParcelNumber?: ParcelNumberDto;
   SmartDoorLock: boolean;
   SmartDoorbell: boolean;
   SmartCurtain: boolean;

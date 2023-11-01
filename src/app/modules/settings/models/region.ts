@@ -1,4 +1,4 @@
-export interface Region {
+export interface RegionDto {
   Id: string;
   Name: string;
 }

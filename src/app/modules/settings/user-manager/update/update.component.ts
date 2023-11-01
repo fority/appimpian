@@ -1,4 +1,4 @@
-import { Location } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import {
   FormControl,
@@ -17,15 +17,14 @@ import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { UserProfileService } from 'src/app/services/userProfile.service';
 import {
   UpdateUserProfileRequest,
-  UserProfile,
+  UserProfileDto,
 } from '../../models/userProfile';
-import { MANAGER_MODULE } from '../user-manager.config';
 
 @Component({
   selector: 'app-update',
   standalone: true,
   imports: [
-    MANAGER_MODULE,
+    CommonModule,
     CardModule,
     ReactiveFormsModule,
     FormsModule,
@@ -42,7 +41,7 @@ export class UpdateComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   createFormGroup: FormGroup;
-  user = {} as UserProfile;
+  user = {} as UserProfileDto;
   userRequest = {} as UpdateUserProfileRequest;
   userId = '';
   regionSelection = [] as SelectOption<string>[];

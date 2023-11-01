@@ -18,7 +18,7 @@ import { LoadingService } from 'src/app/services/loading.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
 import { IotService } from '../../../services/iot.service';
 import { TrueFalsePipe } from '../../../shared/pipes/truefalse.pipe';
-import { IOTSetupTrans } from '../models/iot';
+import { IOTSetupTransDto } from '../models/iot';
 
 @Component({
   selector: 'app-view',
@@ -54,8 +54,8 @@ export class ViewComponent implements OnInit {
     this.iotService.AutoCompleteList();
   FilteredAutoComplete$: Observable<string[]> = of([]);
   MatchModeOptions = FilterOperatorOptions;
-  PagingSignal = signal<PagingContent<IOTSetupTrans>>(
-    {} as PagingContent<IOTSetupTrans>
+  PagingSignal = signal<PagingContent<IOTSetupTransDto>>(
+    {} as PagingContent<IOTSetupTransDto>
   );
 
   ngOnInit() {
@@ -81,7 +81,9 @@ export class ViewComponent implements OnInit {
   Search(data: string) {
     this.SearchTextNgModel = data;
     this.Page = 1;
-    this.FilterText = 'Id|ServiceNumber@=' + this.SearchTextNgModel;
+    this.iotService.SetModelId(this.SearchTextNgModel);
+    this.FilterText =
+      'ServiceNumber|ParcelNumber.UnitNumber@=' + this.SearchTextNgModel;
     this.ResetTable();
     this.LoadData();
   }
@@ -101,7 +103,7 @@ export class ViewComponent implements OnInit {
     }
   }
 
-  Delete(event: any, data: IOTSetupTrans) {
+  Delete(event: any, data: IOTSetupTransDto) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Are you sure to delete?',

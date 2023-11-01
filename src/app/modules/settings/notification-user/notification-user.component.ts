@@ -10,7 +10,7 @@ import { PagingContent } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationUserService } from 'src/app/services/notification-user.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
-import { NotificationUser } from '../models/notif-user';
+import { NotificationUserDto } from '../models/notif-user';
 
 @Component({
   selector: 'app-notification-user',
@@ -36,15 +36,15 @@ export class NotificationUserComponent {
   PageSize: number = 10;
   SearchTextNgModel: string = '';
 
-  ClonedLineData: { [s: string]: NotificationUser } = {};
+  ClonedLineData: { [s: string]: NotificationUserDto } = {};
   isAddEnable: boolean = false;
   NewName: string = '';
   NewEmail: string = '';
 
   AutoCompleteSource$: Observable<string[]> =
     this.notificationUserService.AutoCompleteList();
-  PagingSignal = signal<PagingContent<NotificationUser>>(
-    {} as PagingContent<NotificationUser>
+  PagingSignal = signal<PagingContent<NotificationUserDto>>(
+    {} as PagingContent<NotificationUserDto>
   );
 
   ngOnInit() {
@@ -102,11 +102,11 @@ export class NotificationUserComponent {
       });
   }
 
-  onRowEditInit(data: NotificationUser) {
+  onRowEditInit(data: NotificationUserDto) {
     this.ClonedLineData[data.Id] = { ...data };
   }
 
-  Delete(event: any, User: NotificationUser) {
+  Delete(event: any, User: NotificationUserDto) {
     this.confirmationService.confirm({
       target: event.target as EventTarget,
       message: 'Are you sure to delete?',
@@ -126,7 +126,7 @@ export class NotificationUserComponent {
     });
   }
 
-  onRowEditSave(index: number, user: NotificationUser) {
+  onRowEditSave(index: number, user: NotificationUserDto) {
     this.loadingService.start();
     this.notificationUserService
       .Update({ Id: user.Id, Name: user.Name, Email: user.Email })
@@ -144,7 +144,7 @@ export class NotificationUserComponent {
       });
   }
 
-  onRowEditCancel(user: NotificationUser, index: number) {
+  onRowEditCancel(user: NotificationUserDto, index: number) {
     this.PagingSignal.mutate(
       (res) => (res.Content[index] = this.ClonedLineData[user.Id])
     );
