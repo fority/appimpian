@@ -112,21 +112,13 @@ export class UserProfileService {
 
   Disable(id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', id);
-    return this.httpClient
-      .post<BaseResponse>(`${this.ApiUrl}/Disable`, {
-        ...httpOptions,
-        params,
-      })
+    return this.httpClient.post<BaseResponse>(`${this.ApiUrl}/Disable`, null, { ...httpOptions, params })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
   Enable(Id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', Id);
-    return this.httpClient
-      .post<BaseResponse>(`${this.ApiUrl}/Enable`, {
-        ...httpOptions,
-        params,
-      })
+    return this.httpClient.post<BaseResponse>(`${this.ApiUrl}/Enable`, null, { ...httpOptions, params })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
