@@ -1,12 +1,24 @@
 <div class="container">
-  <p-card>
-    <div class="">
-      <h1>{{ !parcelId ? "Create Parcel Number" : "Update Parcel Number" }}</h1>
-    </div>
+  <p-card header="{{ Title }}">
+    <p-toolbar>
+      <div class="p-toolbar-group-start">
+        <p-button (onClick)="SaveUpdateClick()">{{
+          !parcelId ? "Create" : "Update"
+        }}</p-button>
+      </div>
+      <div class="p-toolbar-group-end">
+        <p-button
+          icon="pi pi-times"
+          styleClass="p-button-danger"
+          (onClick)="CancelClick()"
+        ></p-button>
+      </div>
+    </p-toolbar>
+    <br />
     <form [formGroup]="createFormGroup">
       <div class="field grid">
         <label for="Unit Number" class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span class="text-red-400">*</span>Unit Number:
+          ><span *ngIf="!isUpdate" class="text-red-400">*</span>Unit Number:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -20,7 +32,7 @@
       </div>
       <div class="field grid">
         <label for="Purchaser" class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span class="text-red-400">*</span>Purchaser:
+          ><span *ngIf="!isUpdate" class="text-red-400">*</span>Purchaser:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -34,7 +46,7 @@
       </div>
       <div class="field grid">
         <label for="Email" class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span class="text-red-400">*</span>Email:
+          ><span *ngIf="!isUpdate" class="text-red-400">*</span>Email:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -48,7 +60,7 @@
       </div>
       <div class="field grid">
         <label for="Contact No" class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span class="text-red-400">*</span>Contact No:
+          ><span *ngIf="!isUpdate" class="text-red-400">*</span>Contact No:
         </label>
         <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
           <input
@@ -61,16 +73,5 @@
         </div>
       </div>
     </form>
-    <div class="card flex flex-wrap gap-3 justify-content-center">
-      <p-button
-        label="Cancel"
-        [rounded]="true"
-        [style]="{ 'background-color': '#FFF', color: 'black' }"
-        (click)="CancelClick()"
-      ></p-button>
-      <p-button [rounded]="true" (click)="SaveUpdateClick()">{{
-        !parcelId ? "Create" : "Update"
-      }}</p-button>
-    </div>
   </p-card>
 </div>

@@ -15,7 +15,6 @@ import {
   IOTSetupTransDto,
   UpdateIotRequest,
 } from '../modules/iot/models/iot';
-import { BaseResponse } from '../shared/models/data-response';
 import { LoadingService } from './loading.service';
 
 const blobOptions = { responseType: 'blob' as 'json' };
@@ -111,7 +110,7 @@ export class IotService {
       );
   }
 
-  GetById = (data: string): Observable<IOTSetupTransDto> => {
+  GetById(data: string): Observable<IOTSetupTransDto> {
     let params = new HttpParams().append('Id', data);
     return this.httpClient
       .get<BaseResponseWithData<IOTSetupTransDto>>(`${this.ApiUrl}/GetById`, {
@@ -123,22 +122,23 @@ export class IotService {
         tap(this.RespondShowMessage),
         map((resp) => resp.Data)
       );
-  };
+  }
 
-  Delete = (data: string) => {
-    let params = new HttpParams().append('Id', data);
+  // Delete(data: string): Observable<BaseResponse> {
+  //   let params = new HttpParams().append('Id', data);
+  //   return this.httpClient
+  //     .delete<BaseResponse>(`${this.ApiUrl}/Delete`, { ...httpOptions, params })
+  //     .pipe(tap(this.RespondShowMessage));
+  // };
+
+  AutoCompleteList(): Observable<string[]> {
     return this.httpClient
-      .delete<BaseResponse>(`${this.ApiUrl}/Delete`, { ...httpOptions, params })
-      .pipe(tap(this.RespondShowMessage));
-  };
-
-  AutoCompleteList = (): Observable<string[]> =>
-    this.httpClient
       .get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
       .pipe(
         map((resp) => resp || []),
         shareReplay(1)
       );
+  }
 
   DownloadPdf(Id: string): Observable<any> {
     let params = new HttpParams().append('Id', Id);
@@ -156,13 +156,11 @@ export class IotService {
 
   public ExportToExcel() {
     return this.httpClient
-      .get(`${this.ApiUrl}/ResendEmail`, { ...blobOptions })
+      .get(`${this.ApiUrl}/ExportToExcel`, { ...blobOptions })
       .pipe(shareReplay(5));
   }
 
-  RespondShowMessage = (
-    respond: { Success: boolean; Message: string } | any
-  ) => {
+  RespondShowMessage(respond: { Success: boolean; Message: string } | any) {
     if (!respond?.Success) {
       this.messageService.add({
         severity: 'error',
@@ -172,7 +170,7 @@ export class IotService {
       this.loadingService.stop();
       throw new Error('App return unsuccessfully');
     }
-  };
+  }
 
   SetModelId(text: string) {
     localStorage.setItem('modelId', text);

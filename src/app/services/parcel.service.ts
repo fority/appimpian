@@ -123,24 +123,23 @@ export class ParcelService {
       );
   }
 
-  Delete = (data: string) => {
+  Delete(data: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', data);
     return this.httpClient
       .delete<BaseResponse>(`${this.ApiUrl}/Delete`, { ...httpOptions, params })
       .pipe(tap(this.RespondShowMessage));
-  };
+  }
 
-  AutoCompleteList = (): Observable<string[]> =>
-    this.httpClient
+  AutoCompleteList(): Observable<string[]> {
+    return this.httpClient
       .get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
       .pipe(
         map((resp) => resp || []),
         shareReplay(1)
       );
+  }
 
-  RespondShowMessage = (
-    respond: { Success: boolean; Message: string } | any
-  ) => {
+  RespondShowMessage(respond: { Success: boolean; Message: string } | any) {
     if (!respond?.Success) {
       this.messageService.add({
         severity: 'error',
@@ -150,5 +149,5 @@ export class ParcelService {
       this.loadingService.stop();
       throw new Error('App return unsuccessfully');
     }
-  };
+  }
 }

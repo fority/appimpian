@@ -1,10 +1,24 @@
-<div class="container">
-  <p-card>
-    <div class="">
-      <h1>
-        Profile <span class="pi pi-user-edit" style="font-size: 1.5rem"></span>
-      </h1>
-    </div>
+<div class="">
+  <p-card header="Profile">
+    <h1>
+      <span
+        class="flex justify-content-center pi pi-user-edit"
+        style="font-size: 50px"
+      ></span>
+    </h1>
+    <p-toolbar>
+      <div class="p-toolbar-group-start">
+        <p-button (onClick)="SaveUpdateClick()">Update</p-button>
+      </div>
+      <div class="p-toolbar-group-end">
+        <p-button
+          icon="pi pi-times"
+          styleClass="p-button-danger"
+          (onClick)="CancelClick()"
+        ></p-button>
+      </div>
+    </p-toolbar>
+    <br />
     <form [formGroup]="createFormGroup">
       <div class="field grid">
         <label class="col-12 mb-2 md:col-2 md:mb-0"
@@ -49,14 +63,5 @@
         </div>
       </div>
     </form>
-    <div class="card flex flex-wrap gap-3 justify-content-center">
-      <p-button
-        label="Cancel"
-        [rounded]="true"
-        [style]="{ 'background-color': '#FFF', color: 'black' }"
-        (click)="CancelClick()"
-      ></p-button>
-      <p-button [rounded]="true" (click)="SaveUpdateClick()">Update</p-button>
-    </div>
   </p-card>
 </div>

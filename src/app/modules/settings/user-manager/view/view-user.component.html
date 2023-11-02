@@ -6,7 +6,13 @@
     <div
       class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
     >
-      <app-searchbox PlaceHolder="Search"> </app-searchbox>
+      <app-searchbox
+        [AutoCompleteSource$]="AutoCompleteSource$"
+        PlaceHolder="Search"
+        (onSearch)="Search($event)"
+        (onClearClick)="ClearSearch()"
+      >
+      </app-searchbox>
       <p-button
         icon="pi pi-plus"
         label="Import"
@@ -18,30 +24,63 @@
   </div>
 
   <p-table
-    dataKey="Id"
     #basicTable
-    [reorderableColumns]="true"
+    dataKey="Id"
+    editMode="row"
     [tableStyle]="{ 'min-width': '50rem' }"
     styleClass="p-datatable-striped p-datatable-gridlines"
     [value]="PagingSignal().Content"
-    [totalRecords]="PagingSignal().TotalElements"
+    [totalRecords]="PagingSignal().TotalElements || 0"
     [rows]="PageSize"
     [paginator]="true"
     [rowsPerPageOptions]="[10, 20, 30, 50]"
     [showCurrentPageReport]="true"
     [currentPageReportTemplate]="'{currentPage} of {totalPages}'"
     [lazy]="true"
+    [sortMode]="'multiple'"
     (onLazyLoad)="NextPage($event)"
   >
     <ng-template pTemplate="header">
       <tr>
-        <th scope="row" style="width: 25%">Display Name</th>
-        <th scope="row" style="width: 25%">Username</th>
-        <th scope="row" style="width: 25%">Phone</th>
-        <th scope="row" style="width: 25%">Email</th>
-        <th scope="row" style="width: 25%">Address</th>
-        <th scope="row" style="width: 25%">Disable</th>
-        <th scope="row" style="width: 25%">Action</th>
+        <th scope="row" pSortableColumn="Name" style="width: 20%">
+          <div class="flex justify-content-between align-items-center">
+            Display Name
+            <p-columnFilter
+              [showOperator]="false"
+              [showAddButton]="false"
+              [matchModeOptions]="MatchModeOptions"
+              type="text"
+              field="Name"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter
+            ><p-sortIcon field="Name"></p-sortIcon>
+          </div>
+        </th>
+        <th scope="row" pSortableColumn="Username" style="width: 20%">
+          <div class="flex justify-content-between align-items-center">
+            Username
+            <p-columnFilter
+              [showOperator]="false"
+              [showAddButton]="false"
+              [matchModeOptions]="MatchModeOptions"
+              type="text"
+              field="Username"
+              display="menu"
+              class="ml-auto"
+            ></p-columnFilter
+            ><p-sortIcon field="Username"></p-sortIcon>
+          </div>
+        </th>
+        <th pSortableColumn="PhoneNumber" style="width: 10%">
+          Phone <p-sortIcon field="PhoneNumber"></p-sortIcon>
+        </th>
+        <th pSortableColumn="Email" style="width: 20%">
+          Email <p-sortIcon field="Email"></p-sortIcon>
+        </th>
+        <th style="width: 20%">Address</th>
+        <th style="width: 5%">Disable</th>
+        <th style="width: 5%">Action</th>
       </tr>
     </ng-template>
 

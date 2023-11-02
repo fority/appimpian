@@ -23,10 +23,11 @@ import { SignatureComponent } from '../signature/signature.component';
 @Component({
   selector: 'app-save',
   standalone: true,
-  templateUrl: './save.component.html',
-  styleUrls: ['./save.component.less'],
+  templateUrl: './add-edit.component.html',
+  styleUrls: ['./add-edit.component.less'],
   imports: [
-    CommonModule, ToolbarModule,
+    CommonModule,
+    ToolbarModule,
     CardModule,
     ReactiveFormsModule,
     FormsModule,
@@ -37,7 +38,7 @@ import { SignatureComponent } from '../signature/signature.component';
     CheckboxModule,
   ],
 })
-export class SaveComponent {
+export class AddEditComponent {
   @ViewChild('appSign') signComp = {} as SignatureComponent;
   private parcelService = inject(ParcelService);
   private activatedRoute = inject(ActivatedRoute);
@@ -52,8 +53,11 @@ export class SaveComponent {
   ParcelNumberId = '';
   Title = '';
 
-
-  ParcelNoSource$ = this.parcelService.Get(1, 10000).pipe(map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id }))));
+  ParcelNoSource$ = this.parcelService
+    .Get(1, 10000)
+    .pipe(
+      map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id })))
+    );
 
   constructor() {
     this.impianFormGroup = new FormGroup({
@@ -90,11 +94,11 @@ export class SaveComponent {
       this.impianFormGroup.get('Gateway')?.disable();
       this.impianFormGroup.get('SmartSpeaker')?.disable();
       this.impianFormGroup.get('Handbook')?.disable();
-      this.Title = "Update IOT Setup";
+      this.Title = 'Update IOT Setup';
       this.LoadForm();
     } else {
       this.isUpdate = false;
-      this.Title = "Create IOT Setup";
+      this.Title = 'Create IOT Setup';
       this.impianFormGroup.get('Id')?.disable();
     }
   }

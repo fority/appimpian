@@ -3,9 +3,18 @@ import { Injectable, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Observable, map, retry, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import { BaseResponse, DefaultPage, DefaultPageSize, PagingContent, httpOptions } from '../core/models/sharedModels';
+import {
+  BaseResponse,
+  DefaultPage,
+  DefaultPageSize,
+  PagingContent,
+  httpOptions,
+} from '../core/models/sharedModels';
 import { FxtIdServerUserDto } from '../models/fxtIdServerUserModels';
-import { UpdateUserProfileRequest, UserProfileDto, } from '../modules/settings/models/userProfile';
+import {
+  UpdateUserProfileRequest,
+  UserProfileDto,
+} from '../modules/settings/models/userProfile';
 import { BaseResponseWithData } from './../shared/models/data-response';
 import { LoadingService } from './loading.service';
 
@@ -23,9 +32,20 @@ export class UserProfileService {
     return `${environment.apiBaseUrl}/${this.url}`;
   }
 
-  Get(Page: number = DefaultPage, PageSize: number = DefaultPageSize, SearchText: string = ''): Observable<PagingContent<UserProfileDto>> {
-    let params = new HttpParams().append('Page', Page).append('PageSize', PageSize).append('SearchText', SearchText);
-    return this.httpClient.get<BaseResponseWithData<PagingContent<UserProfileDto>>>(`${this.ApiUrl}/Get`, { ...httpOptions, params })
+  Get(
+    Page: number = DefaultPage,
+    PageSize: number = DefaultPageSize,
+    SearchText: string = ''
+  ): Observable<PagingContent<UserProfileDto>> {
+    let params = new HttpParams()
+      .append('Page', Page)
+      .append('PageSize', PageSize)
+      .append('SearchText', SearchText);
+    return this.httpClient
+      .get<BaseResponseWithData<PagingContent<UserProfileDto>>>(
+        `${this.ApiUrl}/Get`,
+        { ...httpOptions, params }
+      )
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -34,9 +54,22 @@ export class UserProfileService {
       );
   }
 
-  AdvancedFilter(Page: number = DefaultPage, PageSize: number = DefaultPageSize, Filters: string = '', Sorts: string = ''): Observable<PagingContent<UserProfileDto>> {
-    let params = new HttpParams().append('Page', Page).append('PageSize', PageSize).append('Filters', Filters).append('Sorts', Sorts);
-    return this.httpClient.get<BaseResponseWithData<PagingContent<UserProfileDto>>>(`${this.ApiUrl}/AdvancedFilter`, { ...httpOptions, params })
+  AdvancedFilter(
+    Page: number = DefaultPage,
+    PageSize: number = DefaultPageSize,
+    Filters: string = '',
+    Sorts: string = ''
+  ): Observable<PagingContent<UserProfileDto>> {
+    let params = new HttpParams()
+      .append('Page', Page)
+      .append('PageSize', PageSize)
+      .append('Filters', Filters)
+      .append('Sorts', Sorts);
+    return this.httpClient
+      .get<BaseResponseWithData<PagingContent<UserProfileDto>>>(
+        `${this.ApiUrl}/AdvancedFilter`,
+        { ...httpOptions, params }
+      )
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -47,7 +80,11 @@ export class UserProfileService {
 
   GetById(data: string): Observable<UserProfileDto> {
     let params = new HttpParams().append('Id', data);
-    return this.httpClient.get<BaseResponseWithData<UserProfileDto>>(`${this.ApiUrl}/GetById`, { ...httpOptions, params, })
+    return this.httpClient
+      .get<BaseResponseWithData<UserProfileDto>>(`${this.ApiUrl}/GetById`, {
+        ...httpOptions,
+        params,
+      })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -56,7 +93,12 @@ export class UserProfileService {
   }
 
   Update(data: UpdateUserProfileRequest): Observable<UserProfileDto> {
-    return this.httpClient.put<BaseResponseWithData<UserProfileDto>>(`${this.ApiUrl}/Update`, data, httpOptions)
+    return this.httpClient
+      .put<BaseResponseWithData<UserProfileDto>>(
+        `${this.ApiUrl}/Update`,
+        data,
+        httpOptions
+      )
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -66,18 +108,30 @@ export class UserProfileService {
 
   Disable(id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', id);
-    return this.httpClient.post<BaseResponse>(`${this.ApiUrl}/Disable`, null, { ...httpOptions, params })
+    return this.httpClient
+      .post<BaseResponse>(`${this.ApiUrl}/Disable`, null, {
+        ...httpOptions,
+        params,
+      })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
   Enable(Id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', Id);
-    return this.httpClient.post<BaseResponse>(`${this.ApiUrl}/Enable`, null, { ...httpOptions, params })
+    return this.httpClient
+      .post<BaseResponse>(`${this.ApiUrl}/Enable`, null, {
+        ...httpOptions,
+        params,
+      })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
   FxtGetUser(): Observable<PagingContent<FxtIdServerUserDto>> {
-    return this.httpClient.get<BaseResponseWithData<PagingContent<FxtIdServerUserDto>>>(`${this.ApiUrl}/FxtGetUser`, httpOptions)
+    return this.httpClient
+      .get<BaseResponseWithData<PagingContent<FxtIdServerUserDto>>>(
+        `${this.ApiUrl}/FxtGetUser`,
+        httpOptions
+      )
       .pipe(
         tap((resp) => this.RespondShowMessage(resp)),
         map((x) => x.Data || [])
@@ -86,12 +140,17 @@ export class UserProfileService {
 
   FxtImportUser(id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', id);
-    return this.httpClient.post<BaseResponse>(`${this.ApiUrl}/FxtImportUser`, null, { ...httpOptions, params })
+    return this.httpClient
+      .post<BaseResponse>(`${this.ApiUrl}/FxtImportUser`, null, {
+        ...httpOptions,
+        params,
+      })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
-  };
+  }
 
   AutoCompleteList(): Observable<string[]> {
-    return this.httpClient.get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
+    return this.httpClient
+      .get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
       .pipe(
         map((resp) => resp || []),
         shareReplay(1)
@@ -118,9 +177,7 @@ export class UserProfileService {
   //       shareReplay(1)
   //     );
 
-  RespondShowMessage = (
-    respond: { Success: boolean; Message: string } | any
-  ) => {
+  RespondShowMessage(respond: { Success: boolean; Message: string } | any) {
     if (!respond?.Success) {
       this.messageService.add({
         severity: 'error',
@@ -130,5 +187,5 @@ export class UserProfileService {
       this.loadingService.stop();
       throw new Error('App return unsuccessfully');
     }
-  };
+  }
 }

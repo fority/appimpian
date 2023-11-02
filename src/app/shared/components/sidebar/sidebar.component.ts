@@ -61,7 +61,7 @@ export class SidebarComponent {
     },
     {
       label: 'Setting',
-      visible: true,
+      visible: false,
       roles: ['DKMY.Impian.Admin'],
       items: [
         {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { Component, ViewChild, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/api';
@@ -8,40 +8,61 @@ import { CardModule } from 'primeng/card';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
-import { TableLazyLoadEvent, TableModule } from 'primeng/table';
+import { Table, TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { Observable, catchError, map } from 'rxjs';
 import { PagingContent } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UserProfileService } from 'src/app/services/userProfile.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
 import { UserProfileDto } from '../../models/userProfile';
+import { FilterOperatorOptions } from 'src/app/core/utils/tableFilter';
+import { TreeTableModule } from 'primeng/treetable';
 
 @Component({
   selector: 'app-view',
   standalone: true,
-  imports: [CommonModule, CardModule, SearchboxComponent, ButtonModule, TableModule, FormsModule, InputSwitchModule,
-    DialogModule, DropdownModule],
+  imports: [
+    CommonModule,
+    CardModule,
+    SearchboxComponent,
+    ButtonModule,
+    TableModule,
+    FormsModule,
+    InputSwitchModule,
+    DialogModule,
+    DropdownModule,
+    TreeTableModule,
+  ],
   templateUrl: './view-user.component.html',
   styleUrls: ['./view-user.component.less'],
 })
 export class ViewUserComponent {
+  @ViewChild('basicTable') basicTable?: Table;
   Title: string = 'User Manager';
 
   listOfData = [] as UserProfileDto[];
   Page: number = 1;
   PageSize: number = 10;
+  SortText = '';
+  FilterText = '';
   SearchTextNgModel: string = '';
   isVisible = false;
+  MatchModeOptions = FilterOperatorOptions;
 
   private userProfileService = inject(UserProfileService);
   private loadingService = inject(LoadingService);
   private router = inject(Router);
   private messageService = inject(MessageService);
 
-  AutoCompleteSource$: Observable<string[]> = this.userProfileService.AutoCompleteList();
-  PagingSignal = signal<PagingContent<UserProfileDto>>({} as PagingContent<UserProfileDto>);
+  AutoCompleteSource$: Observable<string[]> =
+    this.userProfileService.AutoCompleteList();
+  PagingSignal = signal<PagingContent<UserProfileDto>>(
+    {} as PagingContent<UserProfileDto>
+  );
 
-  userSelection$ = this.userProfileService.Get(1, 10000).pipe(map(x => x.Content.map(x => ({ label: x.Name, value: x.Id }))));
+  userSelection$ = this.userProfileService
+    .Get(1, 10000)
+    .pipe(map((x) => x.Content.map((x) => ({ label: x.Name, value: x.Id }))));
   userSelected = '';
 
   ngOnInit() {
@@ -68,7 +89,15 @@ export class ViewUserComponent {
   ClearSearch() {
     this.Page = 1;
     this.SearchTextNgModel = '';
+    this.ResetTable();
     this.LoadData();
+  }
+
+  ResetTable() {
+    if (this.basicTable) {
+      this.basicTable.clearFilterValues();
+      this.basicTable.saveState();
+    }
   }
 
   NextPage(event: TableLazyLoadEvent) {
@@ -131,6 +160,7 @@ export class ViewUserComponent {
       });
   }
 
-  EditClick = (id: string) =>
+  EditClick(id: string) {
     this.router.navigate([`/settings/user-manager/update/${id}`]);
+  }
 }

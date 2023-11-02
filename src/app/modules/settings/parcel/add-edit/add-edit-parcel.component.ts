@@ -12,6 +12,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToolbarModule } from 'primeng/toolbar';
 import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { ParcelService } from 'src/app/services/parcel.service';
 import { PhoneNumberRegex } from 'src/app/shared/helpers/regex';
@@ -25,16 +26,17 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    ToolbarModule,
     CardModule,
     ReactiveFormsModule,
     FormsModule,
     DropdownModule,
     ButtonModule,
   ],
-  templateUrl: './save.component.html',
-  styleUrls: ['./save.component.less'],
+  templateUrl: './add-edit-parcel.component.html',
+  styleUrls: ['./add-edit-parcel.component.less'],
 })
-export class SaveParcelComponent {
+export class AddEditParcelComponent {
   private parcelService = inject(ParcelService);
   private location = inject(Location);
   private messageService = inject(MessageService);
@@ -43,6 +45,7 @@ export class SaveParcelComponent {
   createFormGroup: FormGroup;
   parcelId = '';
   isUpdate: boolean = false;
+  Title = '';
 
   constructor() {
     this.createFormGroup = new FormGroup({
@@ -63,9 +66,11 @@ export class SaveParcelComponent {
   ngOnInit(): void {
     if (this.activatedRoute.snapshot.params['id']) {
       this.parcelId = this.activatedRoute.snapshot.params['id'];
+      this.Title = 'Update Parcel Number';
       this.isUpdate = true;
       this.LoadForm();
     } else {
+      this.Title = 'Create Parcel Number';
       this.isUpdate = false;
       this.createFormGroup.get('Id')?.disable();
     }

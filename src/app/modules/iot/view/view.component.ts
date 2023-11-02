@@ -103,23 +103,23 @@ export class ViewComponent implements OnInit {
     }
   }
 
-  Delete(event: any, data: IOTSetupTransDto) {
-    this.confirmationService.confirm({
-      target: event.target as EventTarget,
-      message: 'Are you sure to delete?',
-      icon: 'pi pi-exclamation-triangle',
-      dismissableMask: true,
-      accept: () => {
-        this.iotService.Delete(data.Id).subscribe(() => {
-          this.PagingSignal.update((res) => ({
-            ...res,
-            Content: res.Content.filter((c) => c.Id !== data.Id),
-          }));
-        });
-      },
-      reject: () => {},
-    });
-  }
+  // Delete(event: any, data: IOTSetupTransDto) {
+  //   this.confirmationService.confirm({
+  //     target: event.target as EventTarget,
+  //     message: 'Are you sure to delete?',
+  //     icon: 'pi pi-exclamation-triangle',
+  //     dismissableMask: true,
+  //     accept: () => {
+  //       this.iotService.Delete(data.Id).subscribe(() => {
+  //         this.PagingSignal.update((res) => ({
+  //           ...res,
+  //           Content: res.Content.filter((c) => c.Id !== data.Id),
+  //         }));
+  //       });
+  //     },
+  //     reject: () => {},
+  //   });
+  // }
 
   NextPage(event: TableLazyLoadEvent) {
     if ((event?.first || event?.first === 0) && event?.rows) {
@@ -135,7 +135,13 @@ export class ViewComponent implements OnInit {
     this.LoadData();
   }
 
-  AddClick = () => this.router.navigate(['/iot/create']);
-  GotoDetails = (id: string) => this.router.navigate([`/iot/details/${id}`]);
-  EditClick = (id: string) => this.router.navigate([`/iot/update/${id}`]);
+  AddClick() {
+    this.router.navigate(['/iot/create']);
+  }
+  GotoDetails(id: string) {
+    this.router.navigate([`/iot/details/${id}`]);
+  }
+  EditClick(id: string) {
+    this.router.navigate([`/iot/update/${id}`]);
+  }
 }

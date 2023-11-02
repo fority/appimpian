@@ -132,31 +132,31 @@ export class NotificationUserService {
       );
   }
 
-  Delete = (data: string) => {
+  Delete(data: string) {
     let params = new HttpParams().append('Id', data);
     return this.httpClient
       .delete<BaseResponse>(`${this.ApiUrl}/Delete`, { ...httpOptions, params })
       .pipe(tap(this.RespondShowMessage));
-  };
+  }
 
-  GetSamePage = () =>
-    this.Get(
+  GetSamePage() {
+    return this.Get(
       this.pagingCache.page,
       this.pagingCache.pageSize,
       this.pagingCache.searchText
     );
+  }
 
-  AutoCompleteList = (): Observable<string[]> =>
-    this.httpClient
+  AutoCompleteList(): Observable<string[]> {
+    return this.httpClient
       .get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
       .pipe(
         map((resp) => resp || []),
         shareReplay(1)
       );
+  }
 
-  RespondShowMessage = (
-    respond: { Success: boolean; Message: string } | any
-  ) => {
+  RespondShowMessage(respond: { Success: boolean; Message: string } | any) {
     if (!respond?.Success) {
       this.messageService.add({
         severity: 'error',
@@ -166,5 +166,5 @@ export class NotificationUserService {
       this.loadingService.stop();
       throw new Error('App return unsuccessfully');
     }
-  };
+  }
 }

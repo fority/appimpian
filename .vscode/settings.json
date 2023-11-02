@@ -1,9 +1,11 @@
 {
-  "prettier.printWidth": 9999,
-  "prettier.bracketSameLine": false,
-  "prettier.proseWrap": "preserve",
+  "prettier.printWidth": 120,
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
   "diffEditor.wordWrap": "off",
-  "prettier.enable": true
+  "prettier.enable": true,
+  "prettier.trailingComma": "none",
+  "editor.formatOnSave": true,
+  "prettier.bracketSameLine": true,
+  "prettier.semi": false
 }

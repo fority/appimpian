@@ -12,6 +12,7 @@ import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToolbarModule } from 'primeng/toolbar';
 import { SelectOption } from 'src/app/core/models/sharedModels';
 import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { UserProfileService } from 'src/app/services/userProfile.service';
@@ -25,6 +26,7 @@ import {
   standalone: true,
   imports: [
     CommonModule,
+    ToolbarModule,
     CardModule,
     ReactiveFormsModule,
     FormsModule,
