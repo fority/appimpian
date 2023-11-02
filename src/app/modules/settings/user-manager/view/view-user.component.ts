@@ -9,13 +9,16 @@ import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { Table, TableLazyLoadEvent, TableModule } from 'primeng/table';
-import { Observable, catchError, map } from 'rxjs';
+import { catchError, map } from 'rxjs';
 import { PagingContent } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UserProfileService } from 'src/app/services/userProfile.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
 import { UserProfileDto } from '../../models/userProfile';
-import { FilterOperatorOptions } from 'src/app/core/utils/tableFilter';
+import {
+  FilterOperatorOptions,
+  GetSortText,
+} from 'src/app/core/utils/tableFilter';
 import { TreeTableModule } from 'primeng/treetable';
 
 @Component({
@@ -54,8 +57,6 @@ export class ViewUserComponent {
   private router = inject(Router);
   private messageService = inject(MessageService);
 
-  AutoCompleteSource$: Observable<string[]> =
-    this.userProfileService.AutoCompleteList();
   PagingSignal = signal<PagingContent<UserProfileDto>>(
     {} as PagingContent<UserProfileDto>
   );
@@ -72,7 +73,7 @@ export class ViewUserComponent {
   LoadData() {
     this.loadingService.start();
     this.userProfileService
-      .Get(this.Page, this.PageSize, this.SearchTextNgModel)
+      .AdvancedFilter(this.Page, this.PageSize, this.FilterText, this.SortText)
       .subscribe((x) => {
         this.PagingSignal.set(x);
         console.log(x);
@@ -83,11 +84,15 @@ export class ViewUserComponent {
   Search(data: string) {
     this.SearchTextNgModel = data;
     this.Page = 1;
+    this.userProfileService.SetModelId(this.SearchTextNgModel);
+    this.FilterText = 'Name|Username@=' + this.SearchTextNgModel;
+    this.ResetTable();
     this.LoadData();
   }
 
   ClearSearch() {
     this.Page = 1;
+    this.FilterText = '';
     this.SearchTextNgModel = '';
     this.ResetTable();
     this.LoadData();
@@ -105,6 +110,7 @@ export class ViewUserComponent {
       this.Page = event.first / event.rows + 1 || 1;
       this.PageSize = event.rows;
     }
+    this.SortText = GetSortText(event.multiSortMeta ?? []);
     this.LoadData();
   }
 

@@ -44,8 +44,8 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 5rem"></th>
-        <th scope="row" pSortableColumn="ServiceNumber" style="width: 25%">
+        <th style="width: 5%"></th>
+        <th scope="row" pSortableColumn="ServiceNumber" style="width: 20%">
           <div class="flex justify-content-between align-items-center">
             ServiceNo
             <p-columnFilter
@@ -63,7 +63,7 @@
         <th
           scope="row"
           pSortableColumn="ParcelNumber.UnitNumber"
-          style="width: 25%"
+          style="width: 20%"
         >
           <div class="flex justify-content-between align-items-center">
             ParcelNo
@@ -82,7 +82,7 @@
         <th
           scope="row"
           pSortableColumn="ParcelNumber.PurchaserName"
-          style="width: 25%"
+          style="width: 30%"
         >
           <div class="flex justify-content-between align-items-center">
             Name
@@ -98,12 +98,16 @@
             <p-sortIcon field="ParcelNumber.PurchaserName"></p-sortIcon>
           </div>
         </th>
-        <th scope="row" style="width: 25%">
+        <th scope="row" style="width: 15%">
           <div class="flex justify-content-between align-items-center">
             Date
           </div>
         </th>
-        <th scope="row" style="width: 35%">Action</th>
+        <th scope="row" style="width: 10%">
+          <div class="flex justify-content-between align-items-center">
+            Action
+          </div>
+        </th>
       </tr>
     </ng-template>
 

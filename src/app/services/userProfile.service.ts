@@ -148,15 +148,6 @@ export class UserProfileService {
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
-  AutoCompleteList(): Observable<string[]> {
-    return this.httpClient
-      .get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
-      .pipe(
-        map((resp) => resp || []),
-        shareReplay(1)
-      );
-  }
-
   // GetSelectOption = <K>(
   //   label: keyof UserProfileDto,
   //   value: keyof UserProfileDto
@@ -187,5 +178,14 @@ export class UserProfileService {
       this.loadingService.stop();
       throw new Error('App return unsuccessfully');
     }
+  }
+
+  SetModelId(text: string) {
+    localStorage.setItem('modelId', text);
+  }
+
+  GetModelId() {
+    const x = localStorage.getItem('modelId');
+    return x || undefined;
   }
 }

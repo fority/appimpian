@@ -7,7 +7,6 @@
       class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
     >
       <app-searchbox
-        [AutoCompleteSource$]="AutoCompleteSource$"
         PlaceHolder="Search"
         (onSearch)="Search($event)"
         (onClearClick)="ClearSearch()"
@@ -36,6 +35,7 @@
     [rowsPerPageOptions]="[10, 20, 30, 50]"
     [showCurrentPageReport]="true"
     [currentPageReportTemplate]="'{currentPage} of {totalPages}'"
+    [globalFilterFields]="['Name', 'UserName']"
     [lazy]="true"
     [sortMode]="'multiple'"
     (onLazyLoad)="NextPage($event)"
@@ -65,11 +65,11 @@
               [showAddButton]="false"
               [matchModeOptions]="MatchModeOptions"
               type="text"
-              field="Username"
+              field="UserName"
               display="menu"
               class="ml-auto"
-            ></p-columnFilter
-            ><p-sortIcon field="Username"></p-sortIcon>
+            ></p-columnFilter>
+            <p-sortIcon field="Username"></p-sortIcon>
           </div>
         </th>
         <th pSortableColumn="PhoneNumber" style="width: 10%">
