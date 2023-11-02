@@ -6,7 +6,7 @@ import { RoleService } from 'src/app/services/role.service';
   selector: '[FxtRoleGuard]',
 })
 export class RoleGuardDirective implements OnInit {
-  @Input('roleGuard') roles: string[] = [];
+  @Input('FxtRoleGuard') roles: string[] = [];
   private viewContainerRef = inject(ViewContainerRef);
   private template = inject(TemplateRef<any>);
   readonly roleService = inject(RoleService);
