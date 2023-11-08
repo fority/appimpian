@@ -15,18 +15,14 @@
   </ng-container>
 
   <p-button
-    class="loginBtn"
     pRipple
-    styleClass="p-button-text p-button-sm font-semibold text-xl"
     *ngIf="!(isLogin$ | async)"
     (click)="LoginClick()"
   >
     {{ 'Login' }}
   </p-button>
   <p-button
-    class="loginBtn"
     pRipple
-    styleClass="p-button-text p-button-sm font-semibold text-xl"
     *ngIf="isLogin$ | async"
     (click)="LogoutClick()"
   >

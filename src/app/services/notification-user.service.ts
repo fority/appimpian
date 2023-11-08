@@ -16,7 +16,7 @@ import {
   CreateNotificationUserRequest,
   NotificationUserDto,
   UpdateNotificationUserRequest,
-} from '../modules/settings/models/notif-user';
+} from '../modules/settings/models/notificationUserModels';
 import { LoadingService } from './loading.service';
 
 @Injectable({
@@ -27,8 +27,8 @@ export class NotificationUserService {
   private messageService = inject(MessageService);
   private loadingService = inject(LoadingService);
   private pagingCache: PagingSettings = {
-    page: 1,
-    pageSize: 10,
+    page: DefaultPage,
+    pageSize: DefaultPageSize,
     searchText: '',
   };
 
@@ -40,11 +40,7 @@ export class NotificationUserService {
 
   Create(data: CreateNotificationUserRequest): Observable<NotificationUserDto> {
     return this.httpClient
-      .post<BaseResponseWithData<NotificationUserDto>>(
-        `${this.ApiUrl}/Create`,
-        data,
-        httpOptions
-      )
+      .post<BaseResponseWithData<NotificationUserDto>>(`${this.ApiUrl}/Create`, data, httpOptions)
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -57,15 +53,9 @@ export class NotificationUserService {
     PageSize: number = DefaultPageSize,
     SearchText: string = ''
   ): Observable<PagingContent<NotificationUserDto>> {
-    let params = new HttpParams()
-      .append('Page', Page)
-      .append('PageSize', PageSize)
-      .append('SearchText', SearchText);
+    let params = new HttpParams().append('Page', Page).append('PageSize', PageSize).append('SearchText', SearchText);
     return this.httpClient
-      .get<BaseResponseWithData<PagingContent<NotificationUserDto>>>(
-        `${this.ApiUrl}/Get`,
-        { ...httpOptions, params }
-      )
+      .get<BaseResponseWithData<PagingContent<NotificationUserDto>>>(`${this.ApiUrl}/Get`, { ...httpOptions, params })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -86,13 +76,10 @@ export class NotificationUserService {
       .append('Filters', Filters)
       .append('Sorts', Sorts);
     return this.httpClient
-      .get<BaseResponseWithData<PagingContent<NotificationUserDto>>>(
-        `${this.ApiUrl}/AdvancedFilter`,
-        {
-          ...httpOptions,
-          params,
-        }
-      )
+      .get<BaseResponseWithData<PagingContent<NotificationUserDto>>>(`${this.ApiUrl}/AdvancedFilter`, {
+        ...httpOptions,
+        params,
+      })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -104,13 +91,10 @@ export class NotificationUserService {
   GetById(data: string): Observable<NotificationUserDto> {
     let params = new HttpParams().append('Id', data);
     return this.httpClient
-      .get<BaseResponseWithData<NotificationUserDto>>(
-        `${this.ApiUrl}/GetById`,
-        {
-          ...httpOptions,
-          params,
-        }
-      )
+      .get<BaseResponseWithData<NotificationUserDto>>(`${this.ApiUrl}/GetById`, {
+        ...httpOptions,
+        params,
+      })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -120,11 +104,7 @@ export class NotificationUserService {
 
   Update(data: UpdateNotificationUserRequest): Observable<NotificationUserDto> {
     return this.httpClient
-      .put<BaseResponseWithData<NotificationUserDto>>(
-        `${this.ApiUrl}/Update`,
-        data,
-        httpOptions
-      )
+      .put<BaseResponseWithData<NotificationUserDto>>(`${this.ApiUrl}/Update`, data, httpOptions)
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -140,20 +120,14 @@ export class NotificationUserService {
   }
 
   GetSamePage() {
-    return this.Get(
-      this.pagingCache.page,
-      this.pagingCache.pageSize,
-      this.pagingCache.searchText
-    );
+    return this.Get(this.pagingCache.page, this.pagingCache.pageSize, this.pagingCache.searchText);
   }
 
   AutoCompleteList(): Observable<string[]> {
-    return this.httpClient
-      .get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
-      .pipe(
-        map((resp) => resp || []),
-        shareReplay(1)
-      );
+    return this.httpClient.get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions).pipe(
+      map((resp) => resp || []),
+      shareReplay(1)
+    );
   }
 
   RespondShowMessage(respond: { Success: boolean; Message: string } | any) {

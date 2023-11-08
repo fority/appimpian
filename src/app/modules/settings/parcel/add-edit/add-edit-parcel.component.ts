@@ -19,7 +19,7 @@ import { PhoneNumberRegex } from 'src/app/shared/helpers/regex';
 import {
   CreateParcelRequest,
   UpdateParcelRequest,
-} from '../../models/parcel-no';
+} from '../../models/parcelNumberModels';
 
 @Component({
   selector: 'app-save',

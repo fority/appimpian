@@ -1,12 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, ViewChild, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -18,7 +12,7 @@ import { map } from 'rxjs';
 import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { IotService } from 'src/app/services/iot.service';
 import { ParcelService } from 'src/app/services/parcel.service';
-import { IOTSetupTransDto } from '../models/iot';
+import { IOTSetupTransDto } from '../models/iotSetupTransModels';
 import { SignatureComponent } from '../signature/signature.component';
 @Component({
   selector: 'app-save',
@@ -55,9 +49,7 @@ export class AddEditComponent {
 
   ParcelNoSource$ = this.parcelService
     .Get(1, 10000)
-    .pipe(
-      map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id })))
-    );
+    .pipe(map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id }))));
 
   constructor() {
     this.impianFormGroup = new FormGroup({
@@ -106,9 +98,7 @@ export class AddEditComponent {
   LoadForm() {
     this.iotService.GetById(this.iotId).subscribe((respond) => {
       this.impianFormGroup.patchValue(respond);
-      this.impianFormGroup
-        .get('ParcelNumberId')
-        ?.patchValue(respond.ParcelNumber?.Id);
+      this.impianFormGroup.get('ParcelNumberId')?.patchValue(respond.ParcelNumber?.Id);
     });
     this.impianFormGroup.get('Id')?.enable();
     this.impianFormGroup.get('IRBlasterSerial')?.enable();
@@ -139,9 +129,7 @@ export class AddEditComponent {
         });
         return;
       }
-      this.impianFormGroup
-        .get('Signature')
-        ?.setValue(this.signComp.GetDrawDataUrl());
+      this.impianFormGroup.get('Signature')?.setValue(this.signComp.GetDrawDataUrl());
     }
 
     const service = !this.iotId
@@ -157,9 +145,6 @@ export class AddEditComponent {
   }
 
   get validateName() {
-    return (
-      this.impianFormGroup.get('ParcelNumberId')?.invalid &&
-      this.impianFormGroup.get('ParcelNumberId')?.dirty
-    );
+    return this.impianFormGroup.get('ParcelNumberId')?.invalid && this.impianFormGroup.get('ParcelNumberId')?.dirty;
   }
 }

@@ -1,3 +1,22 @@
+
 .sidebarfooter{
   min-height: 5em;
 }
+
+  a {
+    color: #fff;
+  }
+
+  a:hover {
+    color: #1890ff;
+  }
+
+  .background{
+    background-color: #2b2d42;
+    color: #fff;
+    text-align: center;
+    font-size: 14px;
+  }
+
+
+

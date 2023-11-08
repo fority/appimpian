@@ -9,7 +9,7 @@ import { DownloadFile } from 'src/app/core/utils/helpers';
 import { TrueFalsePipe } from 'src/app/shared/pipes/truefalse.pipe';
 import { IotService } from '../../../services/iot.service';
 import { LoadingService } from './../../../services/loading.service';
-import { IOTSetupTransDto } from './../models/iot';
+import { IOTSetupTransDto } from '../models/iotSetupTransModels';
 
 @Component({
   selector: 'app-details',
@@ -63,7 +63,6 @@ export class DetailsComponent implements OnInit {
     this.loadingService.start();
     this.iotService.GetById(this.iotId).subscribe((x) => {
       this.PagingSource$ = of(x);
-      console.log(x);
       this.unitNumber = x.ParcelNumber?.UnitNumber;
       this.loadingService.stop();
     });

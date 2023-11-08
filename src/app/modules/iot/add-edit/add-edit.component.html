@@ -1,187 +1,131 @@
 <div class="container">
   <p-card header="{{ Title }}">
-    <!-- <div class="">
-      <h1>{{ !iotId ? "Create IOT Setup" : "Update IOT Setup" }}</h1>
-    </div> -->
-
     <p-toolbar>
       <div class="p-toolbar-group-start">
-        <p-button (onClick)="SaveUpdateClick()">{{
-          !iotId ? "Create" : "Update"
-        }}</p-button>
+        <p-button (onClick)="SaveUpdateClick()">{{ !iotId ? "Create" : "Update" }}</p-button>
       </div>
       <div class="p-toolbar-group-end">
-        <p-button
-          icon="pi pi-times"
-          styleClass="p-button-danger"
-          (onClick)="CancelClick()"
-        ></p-button>
+        <p-button icon="pi pi-times" styleClass="p-button-danger" (onClick)="CancelClick()"></p-button>
       </div>
     </p-toolbar>
     <br />
-    <form [formGroup]="impianFormGroup">
-      <div class="field grid">
-        <label for="ParcelNumberId" class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span *ngIf="!isUpdate" class="text-red-400">*</span>Parcel No:
-        </label>
-        <div class="col-12 md:col-10">
-          <p-dropdown
-            placeholder="Please select Parcel Number"
-            [style]="{ width: '75%' }"
-            [options]="(ParcelNoSource$ | async) || []"
-            formControlName="ParcelNumberId"
-            [filter]="true"
-            filterBy="label"
-            [showClear]="true"
-          ></p-dropdown>
-        </div>
+    <form class="form-padding" [formGroup]="impianFormGroup">
+      <div class="field mb-1">
+        <label for="ParcelNumberId"><span *ngIf="!isUpdate" class="text-red-400">*</span>Parcel No:</label>
+        <p-dropdown
+          placeholder="Please select Parcel Number"
+          [options]="(ParcelNoSource$ | async) || []"
+          formControlName="ParcelNumberId"
+          [filter]="true"
+          filterBy="label"
+          [showClear]="true"
+        >
+        </p-dropdown>
       </div>
       <div class="formgroup-inline">
-        <div class="field-checkbox col">
+        <div class="field-checkbox col mb-1">
           <p-checkbox
+            id="SmartDoorLock"
+            name="SmartDoorLock"
             [binary]="true"
             inputId="binary"
             formControlName="SmartDoorLock"
           >
           </p-checkbox>
-          <label for="SmartDoorLock">Smart Door Lock</label>
+          <label name="SmartDoorLock">Smart Door Lock</label>
         </div>
-        <div class="field-checkbox col">
+        <div class="field-checkbox col mb-1">
           <p-checkbox
             [binary]="true"
             inputId="binary"
             id="SmartDoorbell"
+            name="SmartDoorbell"
             formControlName="SmartDoorbell"
           >
           </p-checkbox>
-          <label for="SmartDoorbell">Smart Doorbell</label>
+          <label name="SmartDoorbell">Smart Doorbell</label>
         </div>
       </div>
       <div class="formgroup-inline">
-        <div class="field-checkbox col">
-          <p-checkbox
-            [binary]="true"
-            inputId="binary"
-            formControlName="SmartCurtain"
-          >
-          </p-checkbox>
-          <label for="SmartCurtain">Smart Curtain</label>
+        <div class="field-checkbox col mb-1">
+          <p-checkbox name="SmartCurtain" [binary]="true" inputId="binary" formControlName="SmartCurtain"></p-checkbox>
+          <label name="SmartCurtain">Smart Curtain</label>
         </div>
-        <div class="field-checkbox col">
-          <p-checkbox
-            [binary]="true"
-            inputId="binary"
-            formControlName="SmartSwitches"
-          >
-          </p-checkbox>
+        <div class="field-checkbox col mb-1">
+          <p-checkbox [binary]="true" inputId="binary" formControlName="SmartSwitches"></p-checkbox>
           <label for="SmartSwitches">Smart Switches</label>
         </div>
       </div>
       <div class="formgroup-inline">
-        <div class="field-checkbox col">
-          <p-checkbox
-            [binary]="true"
-            inputId="binary"
-            formControlName="RGBLightStrip"
-          ></p-checkbox>
+        <div class="field-checkbox col mb-1">
+          <p-checkbox [binary]="true" inputId="binary" formControlName="RGBLightStrip"></p-checkbox>
           <label for="RGBLightStrip">RGB LightStrip</label>
         </div>
-        <div class="field-checkbox col">
-          <p-checkbox
-            [binary]="true"
-            inputId="binary"
-            formControlName="SmartTv"
-          >
-          </p-checkbox>
+        <div class="field-checkbox col mb-1">
+          <p-checkbox [binary]="true" inputId="binary" formControlName="SmartTv"></p-checkbox>
           <label for="SmartTv">SmartTv</label>
         </div>
       </div>
       <div class="formgroup-inline">
-        <div class="field-checkbox col">
-          <p-checkbox
-            [binary]="true"
-            inputId="binary"
-            formControlName="Gateway"
-          >
-          </p-checkbox>
+        <div class="field-checkbox col mb-1">
+          <p-checkbox [binary]="true" inputId="binary" formControlName="Gateway"></p-checkbox>
           <label for="Gateway">Gateway</label>
         </div>
-        <div class="field-checkbox col">
-          <p-checkbox
-            [binary]="true"
-            inputId="binary"
-            formControlName="IRBlaster"
-          >
-          </p-checkbox>
+      </div>
+      <div class="formgrid grid padding-checkbox">
+        <div class="field-checkbox col-12 md:col-2 mb-2">
+          <p-checkbox [binary]="true" inputId="binary" formControlName="IRBlaster"> </p-checkbox>
           <label for="IRBlaster">IRBlaster </label>
         </div>
-      </div>
-      <div class="field grid">
-        <label for="IRBlasterSerial" class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span *ngIf="!isUpdate" class="text-red-400">*</span>IRBlaster
-          Serial:
-        </label>
-        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+        <div class="field col-12 md:col-10 mb-1">
+          <label class="col-12 md:col-3" for="IRBlasterSerial"
+            ><span *ngIf="!isUpdate" class="text-red-400">*</span>IRBlaster Serial:</label
+          >
           <input
             id="IRBlasterSerial"
             type="text"
-            placeholder="Please insert Serial Number"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            class="surface-overlay p-1 mb-1 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary col-12 md:col-8"
+            style="font-size: 14px"
             formControlName="IRBlasterSerial"
           />
         </div>
       </div>
-      <div class="field-checkbox">
-        <p-checkbox
-          [binary]="true"
-          inputId="binary"
-          formControlName="SmartSpeaker"
-        >
-        </p-checkbox>
-        <label for="SmartSpeaker">Smart Speaker</label>
-      </div>
-      <div class="field grid">
-        <label for="SmartSpeakerSerial" class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span *ngIf="!isUpdate" class="text-red-400">*</span>Smart Speaker
-          Serial:
-        </label>
-        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+      <div class="formgrid grid padding-checkbox">
+        <div class="field-checkbox col-12 md:col-2 mb-2">
+          <p-checkbox [binary]="true" inputId="binary" formControlName="SmartSpeaker"> </p-checkbox>
+          <label for="SmartSpeaker">Smart Speaker</label>
+        </div>
+        <div class="field col-12 md:col-10 mb-1">
+          <label class="col-12 md:col-3" for="SmartSpeakerSerial"
+            ><span *ngIf="!isUpdate" class="text-red-400">*</span>Smart Speaker Serial:</label
+          >
           <input
             id="SmartSpeakerSerial"
             type="text"
-            placeholder="Please insert Serial Number"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            class="surface-overlay p-1 mb-1 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary col-12 md:col-8"
+            style="font-size: 14px"
             formControlName="SmartSpeakerSerial"
           />
         </div>
       </div>
-      <div class="field-checkbox">
-        <p-checkbox
-          [binary]="true"
-          inputId="binary"
-          formControlName="Handbook"
-        ></p-checkbox>
-        <label for="Handbook">Handbook</label>
-      </div>
-      <div class="field grid">
-        <label for="Remark" class="col-12 mb-2 md:col-2 md:mb-0"
-          >Remark:
-        </label>
-        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+      <div class="formgrid grid padding-checkbox">
+        <div class="field-checkbox col-12 md:col-2 mb-2">
+          <p-checkbox [binary]="true" inputId="binary" formControlName="Handbook"> </p-checkbox>
+          <label for="Handbook">Handbook</label>
+        </div>
+        <div class="field col-12 md:col-10 mb-1">
+          <label class="col-12 md:col-3" for="Remark"> Remark: </label>
           <input
             id="Remark"
             type="text"
-            placeholder="Please Remark"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            class="surface-overlay p-1 mb-1 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary col-12 md:col-8"
             formControlName="Remark"
+            style="font-size: 14px"
           />
         </div>
       </div>
       <div class="field grid">
-        <label
-          for="Signature"
-          class="col-12 mb-2 md:col-2 md:mb-0"
-          *ngIf="!isUpdate"
+        <label for="Signature" class="col-12 p-2 mb-2 md:col-2 md:mb-0" *ngIf="!isUpdate"
           ><span class="text-red-400">*</span>Signature:
         </label>
       </div>

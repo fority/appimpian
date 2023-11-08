@@ -1,26 +1,13 @@
-<p-card>
-  <div class="flex justify-content-between flex-wrap align-items-center my-1">
-    <div class="font-bold text-4xl text-black border-round m-2">
-      {{ Title }}
-    </div>
-    <div
-      class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
+<p-card header="{{ Title }}">
+  <div class="flex justify-content-end flex-wrap gap-4 mb-2">
+    <app-searchbox
+      [AutoCompleteSource$]="AutoCompleteSource$"
+      PlaceHolder="Search"
+      (onSearch)="Search($event)"
+      (onClearClick)="ClearSearch()"
     >
-      <app-searchbox
-        [AutoCompleteSource$]="AutoCompleteSource$"
-        PlaceHolder="Search"
-        (onSearch)="Search($event)"
-        (onClearClick)="ClearSearch()"
-      >
-      </app-searchbox>
-      <p-button
-        icon="pi pi-plus"
-        label="Add"
-        [rounded]="true"
-        (onClick)="AddClick()"
-      >
-      </p-button>
-    </div>
+    </app-searchbox>
+    <p-button icon="pi pi-plus" label="Add" [rounded]="true" (onClick)="AddClick()"> </p-button>
   </div>
 
   <p-table
@@ -28,7 +15,7 @@
     #basicTable
     [reorderableColumns]="true"
     [tableStyle]="{ 'min-width': '50rem' }"
-    styleClass="p-datatable-striped p-datatable-gridlines"
+    styleClass="p-datatable-sm p-datatable-gridlines"
     [value]="PagingSignal().Content"
     [totalRecords]="PagingSignal().TotalElements"
     [rows]="PageSize"
@@ -41,27 +28,19 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th scope="row" style="width: 25%">
-          <div class="flex justify-content-between align-items-center">
-            Unit
-          </div>
+        <th scope="row" style="width: 12%; border-top-left-radius: 0.5rem">
+          <div class="flex justify-content-between align-items-center">Unit</div>
         </th>
-        <th scope="row" style="width: 25%">
-          <div class="flex justify-content-between align-items-center">
-            Purchaser
-          </div>
+        <th scope="row" style="width: 30%">
+          <div class="flex justify-content-between align-items-center">Purchaser</div>
         </th>
-        <th scope="row" style="width: 25%">
-          <div class="flex justify-content-between align-items-center">
-            Email
-          </div>
+        <th scope="row" style="width: 30%">
+          <div class="flex justify-content-between align-items-center">Email</div>
         </th>
-        <th scope="row" style="width: 25%">
-          <div class="flex justify-content-between align-items-center">
-            Contact
-          </div>
+        <th scope="row" style="width: 18%">
+          <div class="flex justify-content-between align-items-center">Contact</div>
         </th>
-        <th scope="row" style="width: 35%">Action</th>
+        <th scope="row" style="width: 10%; border-top-right-radius: 0.5rem">Action</th>
       </tr>
     </ng-template>
 
@@ -72,7 +51,7 @@
         <td>{{ iotModel.Email }}</td>
         <td>{{ iotModel.ContactNumber }}</td>
         <td>
-          <div class="flex align-items-center justify-content-center gap-2">
+          <div class="flex justify-content-between align-items-center">
             <a (click)="EditClick(iotModel.Id)">Edit</a>
           </div>
         </td>

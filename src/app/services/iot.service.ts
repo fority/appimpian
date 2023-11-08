@@ -10,11 +10,7 @@ import {
   PagingContent,
   httpOptions,
 } from '../core/models/sharedModels';
-import {
-  CreateIotRequest,
-  IOTSetupTransDto,
-  UpdateIotRequest,
-} from '../modules/iot/models/iot';
+import { CreateIotRequest, IOTSetupTransDto, UpdateIotRequest } from '../modules/iot/models/iotSetupTransModels';
 import { LoadingService } from './loading.service';
 
 const blobOptions = { responseType: 'blob' as 'json' };
@@ -35,11 +31,7 @@ export class IotService {
 
   Create(data: CreateIotRequest): Observable<IOTSetupTransDto> {
     return this.httpClient
-      .post<BaseResponseWithData<IOTSetupTransDto>>(
-        `${this.ApiUrl}/Create`,
-        data,
-        httpOptions
-      )
+      .post<BaseResponseWithData<IOTSetupTransDto>>(`${this.ApiUrl}/Create`, data, httpOptions)
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -48,17 +40,11 @@ export class IotService {
   }
 
   Update(data: UpdateIotRequest): Observable<IOTSetupTransDto> {
-    return this.httpClient
-      .put<BaseResponseWithData<IOTSetupTransDto>>(
-        `${this.ApiUrl}/Update`,
-        data,
-        httpOptions
-      )
-      .pipe(
-        retry(1),
-        tap(this.RespondShowMessage),
-        map((resp) => resp.Data)
-      );
+    return this.httpClient.put<BaseResponseWithData<IOTSetupTransDto>>(`${this.ApiUrl}/Update`, data, httpOptions).pipe(
+      retry(1),
+      tap(this.RespondShowMessage),
+      map((resp) => resp.Data)
+    );
   }
 
   Get(
@@ -66,15 +52,9 @@ export class IotService {
     PageSize: number = DefaultPageSize,
     SearchText: string = ''
   ): Observable<PagingContent<IOTSetupTransDto>> {
-    let params = new HttpParams()
-      .append('Page', Page)
-      .append('PageSize', PageSize)
-      .append('SearchText', SearchText);
+    let params = new HttpParams().append('Page', Page).append('PageSize', PageSize).append('SearchText', SearchText);
     return this.httpClient
-      .get<BaseResponseWithData<PagingContent<IOTSetupTransDto>>>(
-        `${this.ApiUrl}/Get`,
-        { ...httpOptions, params }
-      )
+      .get<BaseResponseWithData<PagingContent<IOTSetupTransDto>>>(`${this.ApiUrl}/Get`, { ...httpOptions, params })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -95,13 +75,10 @@ export class IotService {
       .append('Filters', Filters)
       .append('Sorts', Sorts);
     return this.httpClient
-      .get<BaseResponseWithData<PagingContent<IOTSetupTransDto>>>(
-        `${this.ApiUrl}/AdvancedFilter`,
-        {
-          ...httpOptions,
-          params,
-        }
-      )
+      .get<BaseResponseWithData<PagingContent<IOTSetupTransDto>>>(`${this.ApiUrl}/AdvancedFilter`, {
+        ...httpOptions,
+        params,
+      })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -124,40 +101,25 @@ export class IotService {
       );
   }
 
-  // Delete(data: string): Observable<BaseResponse> {
-  //   let params = new HttpParams().append('Id', data);
-  //   return this.httpClient
-  //     .delete<BaseResponse>(`${this.ApiUrl}/Delete`, { ...httpOptions, params })
-  //     .pipe(tap(this.RespondShowMessage));
-  // };
-
   AutoCompleteList(): Observable<string[]> {
-    return this.httpClient
-      .get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions)
-      .pipe(
-        map((resp) => resp || []),
-        shareReplay(1)
-      );
+    return this.httpClient.get<string[]>(`${this.ApiUrl}/AutoCompleteList`, httpOptions).pipe(
+      map((resp) => resp || []),
+      shareReplay(1)
+    );
   }
 
   DownloadPdf(Id: string): Observable<any> {
     let params = new HttpParams().append('Id', Id);
-    return this.httpClient
-      .get(`${this.ApiUrl}/DownloadPdf`, { ...blobOptions, params })
-      .pipe(shareReplay(5));
+    return this.httpClient.get(`${this.ApiUrl}/DownloadPdf`, { ...blobOptions, params }).pipe(shareReplay(5));
   }
 
   public ResendEmail(Id: string) {
     let params = new HttpParams().append('Id', Id);
-    return this.httpClient
-      .get(`${this.ApiUrl}/ResendEmail`, { ...blobOptions, params })
-      .pipe(shareReplay(5));
+    return this.httpClient.get(`${this.ApiUrl}/ResendEmail`, { ...blobOptions, params }).pipe(shareReplay(5));
   }
 
   public ExportToExcel() {
-    return this.httpClient
-      .get(`${this.ApiUrl}/ExportToExcel`, { ...blobOptions })
-      .pipe(shareReplay(5));
+    return this.httpClient.get(`${this.ApiUrl}/ExportToExcel`, { ...blobOptions }).pipe(shareReplay(5));
   }
 
   RespondShowMessage(respond: { Success: boolean; Message: string } | any) {

@@ -2,20 +2,14 @@
   <p-card header="{{ Title }}">
     <p-toolbar>
       <div class="p-toolbar-group-start">
-        <p-button (onClick)="SaveUpdateClick()">{{
-          !parcelId ? "Create" : "Update"
-        }}</p-button>
+        <p-button (onClick)="SaveUpdateClick()">{{ !parcelId ? "Create" : "Update" }}</p-button>
       </div>
       <div class="p-toolbar-group-end">
-        <p-button
-          icon="pi pi-times"
-          styleClass="p-button-danger"
-          (onClick)="CancelClick()"
-        ></p-button>
+        <p-button icon="pi pi-times" styleClass="p-button-danger" (onClick)="CancelClick()"></p-button>
       </div>
     </p-toolbar>
     <br />
-    <form [formGroup]="createFormGroup">
+    <form class="form-padding" [formGroup]="createFormGroup">
       <div class="field grid">
         <label for="Unit Number" class="col-12 mb-2 md:col-2 md:mb-0"
           ><span *ngIf="!isUpdate" class="text-red-400">*</span>Unit Number:
@@ -25,7 +19,7 @@
             id="Unit Number"
             type="text"
             placeholder="Please insert Unit Number"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            class="surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             formControlName="UnitNumber"
           />
         </div>
@@ -38,8 +32,8 @@
           <input
             id="Purchaser"
             type="text"
-            placeholder="Please insert Purchaser"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            placeholder="Please enter Purchaser Name"
+            class="surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             formControlName="PurchaserName"
           />
         </div>
@@ -52,8 +46,8 @@
           <input
             id="Email"
             type="text"
-            placeholder="Please Enter Email"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            placeholder="Please enter Email"
+            class="surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             formControlName="Email"
           />
         </div>
@@ -66,8 +60,8 @@
           <input
             id="Contact No"
             type="text"
-            placeholder="Please Enter Contact No"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+            placeholder="Please enter Contact no"
+            class="surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
             formControlName="ContactNumber"
           />
         </div>

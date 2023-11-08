@@ -1,0 +1,59 @@
+p-card {
+  display: block;
+  margin: 30px auto;
+  width: 90%;
+}
+
+:host {
+  display: block;
+
+  ::ng-deep p-card {
+    .p-card-title {
+      margin: 1rem 0.5rem 1.5rem;
+      font-size: clamp(1.5rem, calc(1vw + 1.3rem), 2rem);
+      font-weight: 600;
+      color: #2b2d42;
+    }
+
+    .p-card {
+      border-radius: 2rem;
+    }
+  }
+
+  ::ng-deep {
+    .p-card .p-card-content {
+      padding: 0.5rem;
+    }
+
+    .p-card .p-button {
+      color: #fff;
+      font-size: 14px;
+      font-weight: normal;
+    }
+
+    .p-datatable.p-datatable-sm .p-datatable-thead > tr > th {
+      background: #34364c;
+      padding: 8px;
+      font-size: 14px;
+      color: #ffffff;
+      font-weight: 500;
+      border: none;
+    }
+
+    .p-datatable .p-datatable-tbody > tr > td {
+      font-size: 14px;
+      border: none;
+      border-bottom: 1px solid #dde1e6;
+      padding-top: 8px;
+    }
+
+    .p-paginator {
+      font-size: 14px;
+      color: #2b2d42;
+    }
+
+    .p-button.p-button-icon-only {
+      height: 2rem;
+    }
+  }
+}

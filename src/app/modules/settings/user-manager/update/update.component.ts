@@ -19,7 +19,7 @@ import { UserProfileService } from 'src/app/services/userProfile.service';
 import {
   UpdateUserProfileRequest,
   UserProfileDto,
-} from '../../models/userProfile';
+} from '../../models/userProfileModels';
 
 @Component({
   selector: 'app-update',

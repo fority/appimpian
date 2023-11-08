@@ -3,18 +3,9 @@ import { Injectable, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Observable, map, retry, shareReplay, tap } from 'rxjs';
 import { environment } from 'src/environments/environment.development';
-import {
-  BaseResponse,
-  DefaultPage,
-  DefaultPageSize,
-  PagingContent,
-  httpOptions,
-} from '../core/models/sharedModels';
+import { BaseResponse, DefaultPage, DefaultPageSize, PagingContent, httpOptions } from '../core/models/sharedModels';
 import { FxtIdServerUserDto } from '../models/fxtIdServerUserModels';
-import {
-  UpdateUserProfileRequest,
-  UserProfileDto,
-} from '../modules/settings/models/userProfile';
+import { UpdateUserProfileRequest, UserProfileDto } from '../modules/settings/models/userProfileModels';
 import { BaseResponseWithData } from './../shared/models/data-response';
 import { LoadingService } from './loading.service';
 
@@ -37,15 +28,9 @@ export class UserProfileService {
     PageSize: number = DefaultPageSize,
     SearchText: string = ''
   ): Observable<PagingContent<UserProfileDto>> {
-    let params = new HttpParams()
-      .append('Page', Page)
-      .append('PageSize', PageSize)
-      .append('SearchText', SearchText);
+    let params = new HttpParams().append('Page', Page).append('PageSize', PageSize).append('SearchText', SearchText);
     return this.httpClient
-      .get<BaseResponseWithData<PagingContent<UserProfileDto>>>(
-        `${this.ApiUrl}/Get`,
-        { ...httpOptions, params }
-      )
+      .get<BaseResponseWithData<PagingContent<UserProfileDto>>>(`${this.ApiUrl}/Get`, { ...httpOptions, params })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -66,10 +51,10 @@ export class UserProfileService {
       .append('Filters', Filters)
       .append('Sorts', Sorts);
     return this.httpClient
-      .get<BaseResponseWithData<PagingContent<UserProfileDto>>>(
-        `${this.ApiUrl}/AdvancedFilter`,
-        { ...httpOptions, params }
-      )
+      .get<BaseResponseWithData<PagingContent<UserProfileDto>>>(`${this.ApiUrl}/AdvancedFilter`, {
+        ...httpOptions,
+        params,
+      })
       .pipe(
         retry(1),
         tap(this.RespondShowMessage),
@@ -93,45 +78,30 @@ export class UserProfileService {
   }
 
   Update(data: UpdateUserProfileRequest): Observable<UserProfileDto> {
-    return this.httpClient
-      .put<BaseResponseWithData<UserProfileDto>>(
-        `${this.ApiUrl}/Update`,
-        data,
-        httpOptions
-      )
-      .pipe(
-        retry(1),
-        tap(this.RespondShowMessage),
-        map((resp) => resp.Data)
-      );
+    return this.httpClient.put<BaseResponseWithData<UserProfileDto>>(`${this.ApiUrl}/Update`, data, httpOptions).pipe(
+      retry(1),
+      tap(this.RespondShowMessage),
+      map((resp) => resp.Data)
+    );
   }
 
   Disable(id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', id);
     return this.httpClient
-      .post<BaseResponse>(`${this.ApiUrl}/Disable`, null, {
-        ...httpOptions,
-        params,
-      })
+      .post<BaseResponse>(`${this.ApiUrl}/Disable`, null, { ...httpOptions, params })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
   Enable(Id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', Id);
     return this.httpClient
-      .post<BaseResponse>(`${this.ApiUrl}/Enable`, null, {
-        ...httpOptions,
-        params,
-      })
+      .post<BaseResponse>(`${this.ApiUrl}/Enable`, null, { ...httpOptions, params })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
   FxtGetUser(): Observable<PagingContent<FxtIdServerUserDto>> {
     return this.httpClient
-      .get<BaseResponseWithData<PagingContent<FxtIdServerUserDto>>>(
-        `${this.ApiUrl}/FxtGetUser`,
-        httpOptions
-      )
+      .get<BaseResponseWithData<PagingContent<FxtIdServerUserDto>>>(`${this.ApiUrl}/FxtGetUser`, httpOptions)
       .pipe(
         tap((resp) => this.RespondShowMessage(resp)),
         map((x) => x.Data || [])
@@ -141,40 +111,13 @@ export class UserProfileService {
   FxtImportUser(id: string): Observable<BaseResponse> {
     let params = new HttpParams().append('Id', id);
     return this.httpClient
-      .post<BaseResponse>(`${this.ApiUrl}/FxtImportUser`, null, {
-        ...httpOptions,
-        params,
-      })
+      .post<BaseResponse>(`${this.ApiUrl}/FxtImportUser`, null, { ...httpOptions, params })
       .pipe(tap((resp) => this.RespondShowMessage(resp)));
   }
 
-  // GetSelectOption = <K>(
-  //   label: keyof UserProfileDto,
-  //   value: keyof UserProfileDto
-  // ) =>
-  //   this.httpClient
-  //     .get<BaseResponseWithData<PagingContent<UserProfileDto>>>(
-  //       `${environment.apiBaseUrl}/${this.url}/Get`,
-  //       httpOptions
-  //     )
-  //     .pipe(
-  //       tap((res) => this.RespondShowMessage(res)),
-  //       map((res) =>
-  //         GetArraySelection<K>(res?.Data?.Content ?? [], [
-  //           label as string,
-  //           value as string,
-  //         ])
-  //       ),
-  //       shareReplay(1)
-  //     );
-
   RespondShowMessage(respond: { Success: boolean; Message: string } | any) {
     if (!respond?.Success) {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Apps',
-        detail: respond.Message,
-      });
+      this.messageService.add({ severity: 'error', summary: 'Apps', detail: respond.Message });
       this.loadingService.stop();
       throw new Error('App return unsuccessfully');
     }

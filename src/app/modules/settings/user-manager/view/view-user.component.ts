@@ -10,15 +10,12 @@ import { DropdownModule } from 'primeng/dropdown';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { Table, TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { catchError, map } from 'rxjs';
-import { PagingContent } from 'src/app/core/models/sharedModels';
+import { DefaultPage, DefaultPageSize, PagingContent } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { UserProfileService } from 'src/app/services/userProfile.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
-import { UserProfileDto } from '../../models/userProfile';
-import {
-  FilterOperatorOptions,
-  GetSortText,
-} from 'src/app/core/utils/tableFilter';
+import { UserProfileDto } from '../../models/userProfileModels';
+import { FilterOperatorOptions, GetSortText } from 'src/app/core/utils/tableFilter';
 import { TreeTableModule } from 'primeng/treetable';
 
 @Component({
@@ -44,8 +41,8 @@ export class ViewUserComponent {
   Title: string = 'User Manager';
 
   listOfData = [] as UserProfileDto[];
-  Page: number = 1;
-  PageSize: number = 10;
+  Page: number = DefaultPage;
+  PageSize: number = DefaultPageSize;
   SortText = '';
   FilterText = '';
   SearchTextNgModel: string = '';
@@ -57,9 +54,7 @@ export class ViewUserComponent {
   private router = inject(Router);
   private messageService = inject(MessageService);
 
-  PagingSignal = signal<PagingContent<UserProfileDto>>(
-    {} as PagingContent<UserProfileDto>
-  );
+  PagingSignal = signal<PagingContent<UserProfileDto>>({} as PagingContent<UserProfileDto>);
 
   userSelection$ = this.userProfileService
     .Get(1, 10000)
@@ -72,18 +67,15 @@ export class ViewUserComponent {
 
   LoadData() {
     this.loadingService.start();
-    this.userProfileService
-      .AdvancedFilter(this.Page, this.PageSize, this.FilterText, this.SortText)
-      .subscribe((x) => {
-        this.PagingSignal.set(x);
-        console.log(x);
-        this.loadingService.stop();
-      });
+    this.userProfileService.AdvancedFilter(this.Page, this.PageSize, this.FilterText, this.SortText).subscribe((x) => {
+      this.PagingSignal.set(x);
+      this.loadingService.stop();
+    });
   }
 
   Search(data: string) {
     this.SearchTextNgModel = data;
-    this.Page = 1;
+    this.Page = DefaultPage;
     this.userProfileService.SetModelId(this.SearchTextNgModel);
     this.FilterText = 'Name|Username@=' + this.SearchTextNgModel;
     this.ResetTable();
@@ -91,7 +83,7 @@ export class ViewUserComponent {
   }
 
   ClearSearch() {
-    this.Page = 1;
+    this.Page = DefaultPage;
     this.FilterText = '';
     this.SearchTextNgModel = '';
     this.ResetTable();
@@ -145,11 +137,7 @@ export class ViewUserComponent {
 
   ImportUser() {
     if (!this.userSelected || this.userSelected == '') {
-      this.messageService.add({
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Please select to import!',
-      });
+      this.messageService.add({ severity: 'error', summary: 'Error', detail: 'Please select to import!' });
       return;
     }
     this.userProfileService

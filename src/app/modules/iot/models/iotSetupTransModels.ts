@@ -1,5 +1,5 @@
 import { ExpandableRow } from 'src/app/core/models/sharedModels';
-import { ParcelNumberDto } from '../../settings/models/parcel-no';
+import { ParcelNumberDto } from '../../settings/models/parcelNumberModels';
 
 export interface IOTSetupTransDto extends ExpandableRow {
   Success: any;

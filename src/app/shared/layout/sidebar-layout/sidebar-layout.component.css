@@ -1,23 +1,18 @@
-/* header,
-footer {
-  width: 100%;
-  height: 5em;
-} */
-
 section.bodyContainer {
   min-height: calc(100vh - 10em);
 }
 
 .sidebarlayout {
   min-height: 100%;
+  background-color: #ededed;
 }
 
-.sidebarfooter{
+.sidebarfooter {
   width: 100%;
   min-height: 5em;
 }
 
-.sidebarheader{
+.sidebarheader {
   width: 100%;
   min-height: 5em;
 }

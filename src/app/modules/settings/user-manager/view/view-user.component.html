@@ -1,25 +1,7 @@
-<p-card>
-  <div class="flex justify-content-between flex-wrap align-items-center my-1">
-    <div class="font-bold text-4xl text-black border-round m-2">
-      {{ Title }}
-    </div>
-    <div
-      class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
-    >
-      <app-searchbox
-        PlaceHolder="Search"
-        (onSearch)="Search($event)"
-        (onClearClick)="ClearSearch()"
-      >
-      </app-searchbox>
-      <p-button
-        icon="pi pi-plus"
-        label="Import"
-        [rounded]="true"
-        (click)="ShowModal()"
-      >
-      </p-button>
-    </div>
+<p-card header="{{ Title }}">
+  <div class="flex justify-content-end flex-wrap gap-4 mb-2">
+    <app-searchbox PlaceHolder="Search" (onSearch)="Search($event)" (onClearClick)="ClearSearch()"> </app-searchbox>
+    <p-button icon="pi pi-plus" label="Import" [rounded]="true" (click)="ShowModal()"> </p-button>
   </div>
 
   <p-table
@@ -27,7 +9,7 @@
     dataKey="Id"
     editMode="row"
     [tableStyle]="{ 'min-width': '50rem' }"
-    styleClass="p-datatable-striped p-datatable-gridlines"
+    styleClass="p-datatable-sm p-datatable-gridlines"
     [value]="PagingSignal().Content"
     [totalRecords]="PagingSignal().TotalElements || 0"
     [rows]="PageSize"
@@ -36,15 +18,17 @@
     [showCurrentPageReport]="true"
     [currentPageReportTemplate]="'{currentPage} of {totalPages}'"
     [globalFilterFields]="['Name', 'UserName']"
+    [filterDelay]="0"
     [lazy]="true"
     [sortMode]="'multiple'"
     (onLazyLoad)="NextPage($event)"
   >
     <ng-template pTemplate="header">
       <tr>
-        <th scope="row" pSortableColumn="Name" style="width: 20%">
+        <th scope="row" pSortableColumn="Name" style="width: 18%; border-top-left-radius: 0.5rem">
           <div class="flex justify-content-between align-items-center">
             Display Name
+            <p-sortIcon field="Name"></p-sortIcon>
             <p-columnFilter
               [showOperator]="false"
               [showAddButton]="false"
@@ -53,13 +37,13 @@
               field="Name"
               display="menu"
               class="ml-auto"
-            ></p-columnFilter
-            ><p-sortIcon field="Name"></p-sortIcon>
+            ></p-columnFilter>
           </div>
         </th>
         <th scope="row" pSortableColumn="Username" style="width: 20%">
           <div class="flex justify-content-between align-items-center">
             Username
+            <p-sortIcon field="Username"></p-sortIcon>
             <p-columnFilter
               [showOperator]="false"
               [showAddButton]="false"
@@ -69,18 +53,13 @@
               display="menu"
               class="ml-auto"
             ></p-columnFilter>
-            <p-sortIcon field="Username"></p-sortIcon>
           </div>
         </th>
-        <th pSortableColumn="PhoneNumber" style="width: 10%">
-          Phone <p-sortIcon field="PhoneNumber"></p-sortIcon>
-        </th>
-        <th pSortableColumn="Email" style="width: 20%">
-          Email <p-sortIcon field="Email"></p-sortIcon>
-        </th>
+        <th pSortableColumn="PhoneNumber" style="width: 12%">Phone <p-sortIcon field="PhoneNumber"></p-sortIcon></th>
+        <th pSortableColumn="Email" style="width: 20%">Email <p-sortIcon field="Email"></p-sortIcon></th>
         <th style="width: 20%">Address</th>
         <th style="width: 5%">Disable</th>
-        <th style="width: 5%">Action</th>
+        <th style="width: 5%; border-top-right-radius: 0.5rem">Action</th>
       </tr>
     </ng-template>
 
@@ -107,14 +86,9 @@
   </p-table>
 </p-card>
 
-<p-dialog
-  [(visible)]="isVisible"
-  [draggable]="false"
-  [resizable]="false"
-  header="Import User"
->
+<p-dialog [(visible)]="isVisible" [draggable]="false" [resizable]="false" header="Import User">
   <div class="flex flex-column">
-    <label><span class="text-red-400">*</span>User</label>
+    <label class="mb-2"><span class="text-red-400">*</span>User</label>
     <p-dropdown
       appendTo="body"
       placeholder="Select user"
@@ -126,18 +100,10 @@
   <ng-template pTemplate="footer">
     <div class="flex flex-row justify-content-end">
       <div class="cancel">
-        <p-button
-          (click)="CloseModal()"
-          label="Cancel"
-          styleClass="p-button-text"
-        ></p-button>
+        <p-button (click)="CloseModal()" label="Cancel"></p-button>
       </div>
       <div class="ok">
-        <p-button
-          (click)="ImportUser()"
-          label="OK"
-          styleClass="p-button-text"
-        ></p-button>
+        <p-button (click)="ImportUser()" label="OK"></p-button>
       </div>
     </div>
   </ng-template>

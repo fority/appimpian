@@ -1,3 +1,10 @@
+.p-button{
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: #576268;
+  border: 1px solid #ededed;
+}
+
 app-login-btn .capsule {
   position: relative;
   width: 150px;

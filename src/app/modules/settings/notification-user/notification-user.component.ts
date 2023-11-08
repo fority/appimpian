@@ -6,23 +6,16 @@ import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { Observable, concatMap } from 'rxjs';
-import { PagingContent } from 'src/app/core/models/sharedModels';
+import { DefaultPage, DefaultPageSize, PagingContent } from 'src/app/core/models/sharedModels';
 import { LoadingService } from 'src/app/services/loading.service';
 import { NotificationUserService } from 'src/app/services/notification-user.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
-import { NotificationUserDto } from '../models/notif-user';
+import { NotificationUserDto } from '../models/notificationUserModels';
 
 @Component({
   selector: 'app-notification-user',
   standalone: true,
-  imports: [
-    CommonModule,
-    CardModule,
-    SearchboxComponent,
-    ButtonModule,
-    TableModule,
-    FormsModule,
-  ],
+  imports: [CommonModule, CardModule, SearchboxComponent, ButtonModule, TableModule, FormsModule],
   templateUrl: './notification-user.component.html',
   styleUrls: ['./notification-user.component.less'],
 })
@@ -32,8 +25,8 @@ export class NotificationUserComponent {
   private confirmationService = inject(ConfirmationService);
 
   Title: string = 'Notification User';
-  Page: number = 1;
-  PageSize: number = 10;
+  Page: number = DefaultPage;
+  PageSize: number = DefaultPageSize;
   SearchTextNgModel: string = '';
 
   ClonedLineData: { [s: string]: NotificationUserDto } = {};
@@ -41,11 +34,8 @@ export class NotificationUserComponent {
   NewName: string = '';
   NewEmail: string = '';
 
-  AutoCompleteSource$: Observable<string[]> =
-    this.notificationUserService.AutoCompleteList();
-  PagingSignal = signal<PagingContent<NotificationUserDto>>(
-    {} as PagingContent<NotificationUserDto>
-  );
+  AutoCompleteSource$: Observable<string[]> = this.notificationUserService.AutoCompleteList();
+  PagingSignal = signal<PagingContent<NotificationUserDto>>({} as PagingContent<NotificationUserDto>);
 
   ngOnInit() {
     this.LoadData();
@@ -53,23 +43,21 @@ export class NotificationUserComponent {
 
   LoadData() {
     this.loadingService.start();
-    this.notificationUserService
-      .Get(this.Page, this.PageSize, this.SearchTextNgModel)
-      .subscribe((x) => {
-        this.PagingSignal.set(x);
-        console.log(x);
-        this.loadingService.stop();
-      });
+    this.notificationUserService.Get(this.Page, this.PageSize, this.SearchTextNgModel).subscribe((x) => {
+      this.PagingSignal.set(x);
+      console.log(x);
+      this.loadingService.stop();
+    });
   }
 
   Search(data: string) {
     this.SearchTextNgModel = data;
-    this.Page = 1;
+    this.Page = DefaultPage;
     this.LoadData();
   }
 
   ClearSearch() {
-    this.Page = 1;
+    this.Page = DefaultPage;
     this.SearchTextNgModel = '';
     this.LoadData();
   }
@@ -115,10 +103,7 @@ export class NotificationUserComponent {
       accept: () => {
         this.loadingService.start();
         this.notificationUserService.Delete(User.Id).subscribe(() => {
-          this.PagingSignal.update((res) => ({
-            ...res,
-            Content: res.Content.filter((c) => c.Id !== User.Id),
-          }));
+          this.PagingSignal.update((res) => ({ ...res, Content: res.Content.filter((c) => c.Id !== User.Id) }));
           this.loadingService.stop();
         });
       },
@@ -128,26 +113,22 @@ export class NotificationUserComponent {
 
   onRowEditSave(index: number, user: NotificationUserDto) {
     this.loadingService.start();
-    this.notificationUserService
-      .Update({ Id: user.Id, Name: user.Name, Email: user.Email })
-      .subscribe({
-        next: () => {
-          delete this.ClonedLineData[user.Id];
-          this.loadingService.stop();
-        },
-        error: () => {
-          this.PagingSignal.mutate((res) => {
-            res.Content[index] = this.ClonedLineData[user.Id];
-          });
-          delete this.ClonedLineData[user.Id];
-        },
-      });
+    this.notificationUserService.Update({ Id: user.Id, Name: user.Name, Email: user.Email }).subscribe({
+      next: () => {
+        delete this.ClonedLineData[user.Id];
+        this.loadingService.stop();
+      },
+      error: () => {
+        this.PagingSignal.mutate((res) => {
+          res.Content[index] = this.ClonedLineData[user.Id];
+        });
+        delete this.ClonedLineData[user.Id];
+      },
+    });
   }
 
   onRowEditCancel(user: NotificationUserDto, index: number) {
-    this.PagingSignal.mutate(
-      (res) => (res.Content[index] = this.ClonedLineData[user.Id])
-    );
+    this.PagingSignal.mutate((res) => (res.Content[index] = this.ClonedLineData[user.Id]));
     delete this.ClonedLineData[user.Id];
   }
 }

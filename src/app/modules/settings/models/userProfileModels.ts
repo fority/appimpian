@@ -1,5 +1,5 @@
 import { UserType } from 'src/app/shared/enum/enum';
-import { RegionDto } from './region';
+import { RegionDto } from './regionModels';
 
 export interface UserProfileDto {
   Id: string;

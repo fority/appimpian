@@ -2,10 +2,15 @@
   "prettier.printWidth": 120,
   "prettier.tabWidth": 2,
   "prettier.useTabs": false,
-  "diffEditor.wordWrap": "off",
+  "diffEditor.wordWrap": "inherit",
   "prettier.enable": true,
-  "prettier.trailingComma": "none",
   "editor.formatOnSave": true,
   "prettier.bracketSameLine": true,
-  "prettier.semi": false
+  "prettier.semi": false,
+  "editor.wordWrap": "wordWrapColumn",
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "editor.wordWrapColumn": 120,
+  "[markdown]": {
+    "editor.wordWrap": "wordWrapColumn"
+  }
 }

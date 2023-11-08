@@ -1,24 +1,19 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
-import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
 import { PanelModule } from 'primeng/panel';
 import { RippleModule } from 'primeng/ripple';
 import { Table, TableLazyLoadEvent, TableModule } from 'primeng/table';
 import { Observable, of } from 'rxjs';
-import { PagingContent } from 'src/app/core/models/sharedModels';
-import {
-  FilterOperatorOptions,
-  GetFilterText,
-  GetSortText,
-} from 'src/app/core/utils/tableFilter';
+import { DefaultPage, DefaultPageSize, PagingContent } from 'src/app/core/models/sharedModels';
+import { FilterOperatorOptions, GetFilterText, GetSortText } from 'src/app/core/utils/tableFilter';
 import { LoadingService } from 'src/app/services/loading.service';
 import { SearchboxComponent } from 'src/app/shared/components/searchbox/searchbox.component';
 import { IotService } from '../../../services/iot.service';
 import { TrueFalsePipe } from '../../../shared/pipes/truefalse.pipe';
-import { IOTSetupTransDto } from '../models/iot';
+import { IOTSetupTransDto } from '../models/iotSetupTransModels';
 
 @Component({
   selector: 'app-view',
@@ -38,25 +33,20 @@ import { IOTSetupTransDto } from '../models/iot';
 })
 export class ViewComponent implements OnInit {
   @ViewChild('fTable') fTable?: Table;
-  Title: string = 'Service Transactions';
-  private confirmationService = inject(ConfirmationService);
   private iotService = inject(IotService);
   private loadingService = inject(LoadingService);
   private router = inject(Router);
 
-  Page: number = 1;
-  PageSize: number = 10;
+  Page: number = DefaultPage;
+  PageSize: number = DefaultPageSize;
 
   SortText = '';
   FilterText = '';
   SearchTextNgModel: string = '';
-  AutoCompleteSource$: Observable<string[]> =
-    this.iotService.AutoCompleteList();
+  AutoCompleteSource$: Observable<string[]> = this.iotService.AutoCompleteList();
   FilteredAutoComplete$: Observable<string[]> = of([]);
   MatchModeOptions = FilterOperatorOptions;
-  PagingSignal = signal<PagingContent<IOTSetupTransDto>>(
-    {} as PagingContent<IOTSetupTransDto>
-  );
+  PagingSignal = signal<PagingContent<IOTSetupTransDto>>({} as PagingContent<IOTSetupTransDto>);
 
   ngOnInit() {
     this.LoadData();
@@ -64,32 +54,24 @@ export class ViewComponent implements OnInit {
 
   LoadData() {
     this.loadingService.start();
-    this.iotService
-      .GetAdvancedFilter(
-        this.Page,
-        this.PageSize,
-        this.FilterText,
-        this.SortText
-      )
-      .subscribe((x) => {
-        this.PagingSignal.set(x);
-        console.log(x);
-        this.loadingService.stop();
-      });
+    this.iotService.GetAdvancedFilter(this.Page, this.PageSize, this.FilterText, this.SortText).subscribe((x) => {
+      this.PagingSignal.set(x);
+      console.log(x);
+      this.loadingService.stop();
+    });
   }
 
   Search(data: string) {
     this.SearchTextNgModel = data;
-    this.Page = 1;
+    this.Page = DefaultPage;
     this.iotService.SetModelId(this.SearchTextNgModel);
-    this.FilterText =
-      'ServiceNumber|ParcelNumber.UnitNumber@=' + this.SearchTextNgModel;
+    this.FilterText = 'ServiceNumber|ParcelNumber.UnitNumber@=' + this.SearchTextNgModel;
     this.ResetTable();
     this.LoadData();
   }
 
   ClearSearch() {
-    this.Page = 1;
+    this.Page = DefaultPage;
     this.FilterText = '';
     this.SearchTextNgModel = '';
     this.ResetTable();
@@ -102,24 +84,6 @@ export class ViewComponent implements OnInit {
       this.fTable.saveState();
     }
   }
-
-  // Delete(event: any, data: IOTSetupTransDto) {
-  //   this.confirmationService.confirm({
-  //     target: event.target as EventTarget,
-  //     message: 'Are you sure to delete?',
-  //     icon: 'pi pi-exclamation-triangle',
-  //     dismissableMask: true,
-  //     accept: () => {
-  //       this.iotService.Delete(data.Id).subscribe(() => {
-  //         this.PagingSignal.update((res) => ({
-  //           ...res,
-  //           Content: res.Content.filter((c) => c.Id !== data.Id),
-  //         }));
-  //       });
-  //     },
-  //     reject: () => {},
-  //   });
-  // }
 
   NextPage(event: TableLazyLoadEvent) {
     if ((event?.first || event?.first === 0) && event?.rows) {

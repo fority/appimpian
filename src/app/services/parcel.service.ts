@@ -15,7 +15,7 @@ import {
   CreateParcelRequest,
   ParcelNumberDto,
   UpdateParcelRequest,
-} from '../modules/settings/models/parcel-no';
+} from '../modules/settings/models/parcelNumberModels';
 import { LoadingService } from './loading.service';
 
 @Injectable({

@@ -1,12 +1,46 @@
-:host { display: block; }
+:host {
+  display: block;
 
-.container {
-  padding: var(--padding-container, 1.25em);
-  margin: 1em;
+  ::ng-deep p-card {
+    .p-card-title {
+      margin: 1rem 0.5rem 1.5rem;
+      font-size: clamp(1rem, calc(1vw + 0.8rem), 1.5rem);
+      font-weight: 500;
+      color: #2b2d42;
+    }
+
+    .p-card {
+      border-radius: 2.5rem;
+      background-color: #ededed;
+      margin: 1rem auto;
+      box-shadow: -5px -5px 10px rgb(255 255 255),
+        5px 5px 10px rgb(70 70 70 / 20%);
+    }
+
+    .p-card-body {
+      padding: 1em;
+    }
+
+    .p-card-content {
+      padding: 0;
+    }
+  }
+
+  ::ng-deep p-menubar {
+    .p-menubar {
+      background-color: #fff;
+      margin: 20px;
+    }
+  }
+}
+
+.padding {
+  padding: 0 3rem 1.5rem;
 }
 
 p-card {
   display: block;
-  margin: 20px auto;
-  width: 95%;
+  margin: 30px auto;
+  width: 90%;
+  padding: 1em;
 }

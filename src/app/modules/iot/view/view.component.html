@@ -1,26 +1,19 @@
-<p-card>
-  <div class="flex justify-content-between flex-wrap align-items-center my-1">
-    <div class="font-bold text-4xl text-black border-round m-2">
-      {{ Title }}
-    </div>
-    <div
-      class="flex flex-row flex-wrap gap-2 align-items-center sm:flex-nowrap"
+<p-card header="Service Transactions">
+  <div class="flex justify-content-end flex-wrap gap-4 mb-2">
+    <app-searchbox
+      [AutoCompleteSource$]="AutoCompleteSource$"
+      PlaceHolder="Search"
+      (onSearch)="Search($event)"
+      (onClearClick)="ClearSearch()"
     >
-      <app-searchbox
-        [AutoCompleteSource$]="AutoCompleteSource$"
-        PlaceHolder="Search"
-        (onSearch)="Search($event)"
-        (onClearClick)="ClearSearch()"
-      >
-      </app-searchbox>
-      <p-button
-        icon="pi pi-plus"
-        label="Add"
-        [rounded]="true"
-        (onClick)="AddClick()"
-      >
-      </p-button>
-    </div>
+    </app-searchbox>
+    <p-button
+      icon="pi pi-plus"
+      label="Add"
+      [rounded]="true"
+      (onClick)="AddClick()"
+    >
+    </p-button>
   </div>
 
   <p-table
@@ -28,7 +21,7 @@
     dataKey="Id"
     [reorderableColumns]="true"
     [tableStyle]="{ 'min-width': '50rem' }"
-    styleClass="p-datatable-striped p-datatable-gridlines"
+    styleClass="p-datatable-sm p-datatable-gridlines"
     [value]="PagingSignal().Content"
     [totalRecords]="PagingSignal().TotalElements"
     [rows]="PageSize"
@@ -44,7 +37,7 @@
   >
     <ng-template pTemplate="header">
       <tr>
-        <th style="width: 5%"></th>
+        <th style="width: 5%; border-top-left-radius: 0.5rem"></th>
         <th scope="row" pSortableColumn="ServiceNumber" style="width: 20%">
           <div class="flex justify-content-between align-items-center">
             ServiceNo
@@ -103,7 +96,7 @@
             Date
           </div>
         </th>
-        <th scope="row" style="width: 10%">
+        <th scope="row" style="width: 10%; border-top-right-radius: 0.5rem">
           <div class="flex justify-content-between align-items-center">
             Action
           </div>
@@ -123,7 +116,8 @@
             type="button"
             pButton
             [pRowToggler]="iotModel"
-            class="p-button-text p-button-rounded p-button-plain"
+            style="background-color: #1174c0; font-size: 14px"
+            class=""
             [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
           ></button>
         </td>
@@ -134,7 +128,7 @@
         <td>{{ iotModel.ParcelNumber?.PurchaserName }}</td>
         <td>{{ iotModel.Date | date : "dd/MM/yyyy" }}</td>
         <td>
-          <div class="flex align-items-center justify-content-center gap-2">
+          <div class="flex justify-content-start flex-wrap">
             <a (click)="EditClick(iotModel.Id)">Edit</a>
           </div>
         </td>

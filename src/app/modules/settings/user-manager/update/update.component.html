@@ -1,67 +1,56 @@
-<div class="">
-  <p-card header="Profile">
-    <h1>
-      <span
-        class="flex justify-content-center pi pi-user-edit"
-        style="font-size: 50px"
-      ></span>
-    </h1>
-    <p-toolbar>
-      <div class="p-toolbar-group-start">
-        <p-button (onClick)="SaveUpdateClick()">Update</p-button>
+<p-card header="Profile">
+  <h1>
+    <span class="flex justify-content-center pi pi-user-edit" style="font-size: 50px"></span>
+  </h1>
+  <p-toolbar>
+    <div class="p-toolbar-group-start">
+      <p-button (onClick)="SaveUpdateClick()">Update</p-button>
+    </div>
+    <div class="p-toolbar-group-end">
+      <p-button icon="pi pi-times" styleClass="p-button-danger" (onClick)="CancelClick()"></p-button>
+    </div>
+  </p-toolbar>
+  <br />
+  <form class="form-padding" [formGroup]="createFormGroup">
+    <div class="field grid">
+      <label class="col-12 mb-2 md:col-2 md:mb-0"><span class="text-red-400">*</span>Name: </label>
+      <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+        <input
+          type="text"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          formControlName="Name"
+        />
       </div>
-      <div class="p-toolbar-group-end">
-        <p-button
-          icon="pi pi-times"
-          styleClass="p-button-danger"
-          (onClick)="CancelClick()"
-        ></p-button>
+    </div>
+    <div class="field grid">
+      <label class="col-12 mb-2 md:col-2 md:mb-0">Phone Number: </label>
+      <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+        <input
+          type="text"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          formControlName="PhoneNumber"
+        />
       </div>
-    </p-toolbar>
-    <br />
-    <form [formGroup]="createFormGroup">
-      <div class="field grid">
-        <label class="col-12 mb-2 md:col-2 md:mb-0"
-          ><span class="text-red-400">*</span>Name:
-        </label>
-        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
-          <input
-            type="text"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-            formControlName="Name"
-          />
-        </div>
+    </div>
+    <div class="field grid">
+      <label class="col-12 mb-2 md:col-2 md:mb-0">Email: </label>
+      <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+        <input
+          type="text"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          formControlName="Email"
+        />
       </div>
-      <div class="field grid">
-        <label class="col-12 mb-2 md:col-2 md:mb-0">Phone Number: </label>
-        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
-          <input
-            type="text"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-            formControlName="PhoneNumber"
-          />
-        </div>
+    </div>
+    <div class="field grid">
+      <label class="col-12 mb-2 md:col-2 md:mb-0">Address: </label>
+      <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
+        <input
+          type="text"
+          class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
+          formControlName="Address"
+        />
       </div>
-      <div class="field grid">
-        <label class="col-12 mb-2 md:col-2 md:mb-0">Email: </label>
-        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
-          <input
-            type="text"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-            formControlName="Email"
-          />
-        </div>
-      </div>
-      <div class="field grid">
-        <label class="col-12 mb-2 md:col-2 md:mb-0">Address: </label>
-        <div class="col-12 mb-2 md:col-2 md:mb-0" style="width: 63%">
-          <input
-            type="text"
-            class="text-base text-color surface-overlay p-2 border-1 border-solid surface-border border-round appearance-none outline-none focus:border-primary w-full"
-            formControlName="Address"
-          />
-        </div>
-      </div>
-    </form>
-  </p-card>
-</div>
+    </div>
+  </form>
+</p-card>

@@ -1,8 +1,21 @@
-:host { display: block; }
-
+:host {
+  display: contents;
+}
 
 p-menubar {
   display: inline-block;
   width: 100%;
   max-height: 5em;
+  background-color: #ededed;
 }
+
+:host::ng-deep p-menubar .p-component{
+background-color: #ededed;
+}
+
+img {
+  width: 100%;
+  max-width: 150px;
+  height: auto;
+}
+
