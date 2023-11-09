@@ -41,15 +41,13 @@ export class AddEditComponent {
   private messageService = inject(MessageService);
 
   impianFormGroup: FormGroup;
-  iot = {} as IOTSetupTransDto;
-  iotId = '';
+  iot: IOTSetupTransDto = {} as IOTSetupTransDto;
+  iotId: string = '';
   isUpdate: boolean = false;
-  ParcelNumberId = '';
-  Title = '';
+  ParcelNumberId: string = '';
+  Title: string = '';
 
-  ParcelNoSource$ = this.parcelService
-    .Get(1, 10000)
-    .pipe(map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id }))));
+  ParcelNoSource$ = this.parcelService.Get(1, 10000).pipe(map((x) => x.Content.map((x) => ({ label: x.UnitNumber, value: x.Id }))));
 
   constructor() {
     this.impianFormGroup = new FormGroup({
@@ -107,7 +105,6 @@ export class AddEditComponent {
   }
 
   SaveUpdateClick() {
-    console.log(this.isUpdate);
     let text: Set<string> = new Set();
 
     if (!ValidateForm(this.impianFormGroup)) {
@@ -135,7 +132,7 @@ export class AddEditComponent {
     const service = !this.iotId
       ? this.iotService.Create(this.impianFormGroup.value)
       : this.iotService.Update(this.impianFormGroup.value);
-    service.subscribe((respond) => {
+    service.subscribe(() => {
       this.CancelClick();
     });
   }

@@ -49,7 +49,7 @@ export class ViewComponent implements OnInit {
   PagingSignal = signal<PagingContent<IOTSetupTransDto>>({} as PagingContent<IOTSetupTransDto>);
 
   ngOnInit() {
-    this.LoadData();
+    //this.LoadData();
   }
 
   LoadData() {

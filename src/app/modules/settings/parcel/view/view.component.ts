@@ -1,7 +1,7 @@
 import { ParcelService } from 'src/app/services/parcel.service';
 
 import { CommonModule } from '@angular/common';
-import { Component, inject, OnInit, signal, ViewChild } from '@angular/core';
+import { Component, inject, signal, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -19,7 +19,7 @@ import { ParcelNumberDto } from '../../models/parcelNumberModels';
   templateUrl: './view.component.html',
   styleUrls: ['./view.component.less'],
 })
-export class ViewComponent implements OnInit {
+export class ViewComponent {
   @ViewChild('basicTable') basicTable?: Table;
   Title: string = 'Parcel Number';
 
@@ -34,9 +34,6 @@ export class ViewComponent implements OnInit {
   AutoCompleteSource$: Observable<string[]> = this.parcelService.AutoCompleteList();
   PagingSignal = signal<PagingContent<ParcelNumberDto>>({} as PagingContent<ParcelNumberDto>);
 
-  ngOnInit() {
-    this.LoadData();
-  }
 
   LoadData() {
     this.loadingService.start();
