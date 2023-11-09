@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
-  apiBaseUrl: 'https://impianapi.dkcorp.com',
-  OidcBaseUrl: 'https://chunwei.dkcorp.com',
+  apiBaseUrl: 'https://impianapi.dkproperties.com.my',
+  RedirectUrl: 'https://impianapp.dkproperties.com.my',
+  AuthServerUrl: 'https://authserver.dkproperties.com.my',
 };

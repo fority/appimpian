@@ -2,7 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Observable, map, retry, shareReplay, tap } from 'rxjs';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import { BaseResponse, DefaultPage, DefaultPageSize, PagingContent, httpOptions } from '../core/models/sharedModels';
 import { FxtIdServerUserDto } from '../models/fxtIdServerUserModels';
 import { UpdateUserProfileRequest, UserProfileDto } from '../modules/settings/models/userProfileModels';

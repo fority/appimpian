@@ -3,7 +3,7 @@ import { Inject, Injectable, inject } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Observable, map, retry, shareReplay, tap } from 'rxjs';
 import { LoadingService } from 'src/app/services/loading.service';
-import { environment } from 'src/environments/environment.development';
+import { environment } from 'src/environments/environment';
 import {
   BaseResponse,
   BaseResponseWithData,

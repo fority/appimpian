@@ -105,6 +105,7 @@ export class AddEditComponent {
   }
 
   SaveUpdateClick() {
+    console.log(this.isUpdate);
     let text: Set<string> = new Set();
 
     if (!ValidateForm(this.impianFormGroup)) {
@@ -132,7 +133,7 @@ export class AddEditComponent {
     const service = !this.iotId
       ? this.iotService.Create(this.impianFormGroup.value)
       : this.iotService.Update(this.impianFormGroup.value);
-    service.subscribe(() => {
+    service.subscribe((respond) => {
       this.CancelClick();
     });
   }
