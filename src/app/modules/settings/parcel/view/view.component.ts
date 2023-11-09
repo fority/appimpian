@@ -34,7 +34,6 @@ export class ViewComponent {
   AutoCompleteSource$: Observable<string[]> = this.parcelService.AutoCompleteList();
   PagingSignal = signal<PagingContent<ParcelNumberDto>>({} as PagingContent<ParcelNumberDto>);
 
-
   LoadData() {
     this.loadingService.start();
     this.parcelService.Get(this.Page, this.PageSize, this.SearchTextNgModel).subscribe((x) => {
@@ -54,13 +53,6 @@ export class ViewComponent {
     this.SearchTextNgModel = '';
     this.LoadData();
   }
-
-  // ResetTable() {
-  //   if (this.basicTable) {
-  //     this.basicTable.clearFilterValues();
-  //     this.basicTable.saveState();
-  //   }
-  // }
 
   NextPage(event: TableLazyLoadEvent) {
     if ((event?.first || event?.first === 0) && event?.rows) {

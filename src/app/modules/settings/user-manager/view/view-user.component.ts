@@ -61,10 +61,6 @@ export class ViewUserComponent {
     .pipe(map((x) => x.Content.map((x) => ({ label: x.Name, value: x.Id }))));
   userSelected = '';
 
-  ngOnInit() {
-    this.LoadData();
-  }
-
   LoadData() {
     this.loadingService.start();
     this.userProfileService.AdvancedFilter(this.Page, this.PageSize, this.FilterText, this.SortText).subscribe((x) => {

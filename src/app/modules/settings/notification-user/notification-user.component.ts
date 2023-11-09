@@ -37,10 +37,6 @@ export class NotificationUserComponent {
   AutoCompleteSource$: Observable<string[]> = this.notificationUserService.AutoCompleteList();
   PagingSignal = signal<PagingContent<NotificationUserDto>>({} as PagingContent<NotificationUserDto>);
 
-  ngOnInit() {
-    this.LoadData();
-  }
-
   LoadData() {
     this.loadingService.start();
     this.notificationUserService.Get(this.Page, this.PageSize, this.SearchTextNgModel).subscribe((x) => {
