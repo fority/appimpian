@@ -40,8 +40,8 @@ export class ViewComponent implements OnInit {
   Page: number = DefaultPage;
   PageSize: number = DefaultPageSize;
 
-  SortText = '';
-  FilterText = '';
+  SortText: string = '';
+  FilterText: string = '';
   SearchTextNgModel: string = '';
   AutoCompleteSource$: Observable<string[]> = this.iotService.AutoCompleteList();
   FilteredAutoComplete$: Observable<string[]> = of([]);

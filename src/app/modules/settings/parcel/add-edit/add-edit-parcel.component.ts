@@ -1,12 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -16,23 +10,12 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { ParcelService } from 'src/app/services/parcel.service';
 import { PhoneNumberRegex } from 'src/app/shared/helpers/regex';
-import {
-  CreateParcelRequest,
-  UpdateParcelRequest,
-} from '../../models/parcelNumberModels';
+import { CreateParcelRequest, UpdateParcelRequest } from '../../models/parcelNumberModels';
 
 @Component({
   selector: 'app-save',
   standalone: true,
-  imports: [
-    CommonModule,
-    ToolbarModule,
-    CardModule,
-    ReactiveFormsModule,
-    FormsModule,
-    DropdownModule,
-    ButtonModule,
-  ],
+  imports: [CommonModule, ToolbarModule, CardModule, ReactiveFormsModule, FormsModule, DropdownModule, ButtonModule],
   templateUrl: './add-edit-parcel.component.html',
   styleUrls: ['./add-edit-parcel.component.less'],
 })
@@ -43,23 +26,17 @@ export class AddEditParcelComponent {
   private activatedRoute = inject(ActivatedRoute);
 
   createFormGroup: FormGroup;
-  parcelId = '';
+  parcelId: string = '';
   isUpdate: boolean = false;
-  Title = '';
+  Title: string = '';
 
   constructor() {
     this.createFormGroup = new FormGroup({
       Id: new FormControl<string | null>({ value: null, disabled: true }),
       UnitNumber: new FormControl<string>('', [Validators.required]),
       PurchaserName: new FormControl<string>('', [Validators.required]),
-      Email: new FormControl<string>('', [
-        Validators.required,
-        Validators.email,
-      ]),
-      ContactNumber: new FormControl<string>('', [
-        Validators.required,
-        Validators.pattern(PhoneNumberRegex),
-      ]),
+      Email: new FormControl<string>('', [Validators.required, Validators.email]),
+      ContactNumber: new FormControl<string>('', [Validators.required, Validators.pattern(PhoneNumberRegex)]),
     });
   }
 

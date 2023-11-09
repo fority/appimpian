@@ -25,7 +25,7 @@ export class DetailsComponent implements OnInit {
 
   PagingSource$: Observable<IOTSetupTransDto> = of();
 
-  iotId = '';
+  iotId: string = '';
   items: MenuItem[] | undefined;
   unitNumber: any = [];
 

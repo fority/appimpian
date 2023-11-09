@@ -1,12 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { MessageService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
@@ -16,23 +10,12 @@ import { ToolbarModule } from 'primeng/toolbar';
 import { SelectOption } from 'src/app/core/models/sharedModels';
 import { ValidateForm, ValidateInvalidField } from 'src/app/core/utils/helpers';
 import { UserProfileService } from 'src/app/services/userProfile.service';
-import {
-  UpdateUserProfileRequest,
-  UserProfileDto,
-} from '../../models/userProfileModels';
+import { UpdateUserProfileRequest, UserProfileDto } from '../../models/userProfileModels';
 
 @Component({
   selector: 'app-update',
   standalone: true,
-  imports: [
-    CommonModule,
-    ToolbarModule,
-    CardModule,
-    ReactiveFormsModule,
-    FormsModule,
-    DropdownModule,
-    ButtonModule,
-  ],
+  imports: [CommonModule, ToolbarModule, CardModule, ReactiveFormsModule, FormsModule, DropdownModule, ButtonModule],
   templateUrl: './update.component.html',
   styleUrls: ['./update.component.less'],
 })
@@ -45,20 +28,14 @@ export class UpdateComponent {
   createFormGroup: FormGroup;
   user = {} as UserProfileDto;
   userRequest = {} as UpdateUserProfileRequest;
-  userId = '';
+  userId: string = '';
   regionSelection = [] as SelectOption<string>[];
 
   constructor() {
     this.createFormGroup = new FormGroup({
       Id: new FormControl<string | null>({ value: null, disabled: true }),
-      Name: new FormControl<string>('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
-      PhoneNumber: new FormControl<string>('', [
-        Validators.required,
-        Validators.minLength(3),
-      ]),
+      Name: new FormControl<string>('', [Validators.required, Validators.minLength(3)]),
+      PhoneNumber: new FormControl<string>('', [Validators.required, Validators.minLength(3)]),
       Email: new FormControl<string>(''),
       Address: new FormControl<string>(''),
     });
@@ -86,11 +63,9 @@ export class UpdateComponent {
       });
     }
 
-    this.userProfileService
-      .Update(this.createFormGroup.value)
-      .subscribe((respond) => {
-        this.CancelClick();
-      });
+    this.userProfileService.Update(this.createFormGroup.value).subscribe((respond) => {
+      this.CancelClick();
+    });
   }
 
   CancelClick() {

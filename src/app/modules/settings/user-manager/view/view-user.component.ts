@@ -43,10 +43,10 @@ export class ViewUserComponent {
   listOfData = [] as UserProfileDto[];
   Page: number = DefaultPage;
   PageSize: number = DefaultPageSize;
-  SortText = '';
-  FilterText = '';
+  SortText: string = '';
+  FilterText: string = '';
   SearchTextNgModel: string = '';
-  isVisible = false;
+  isVisible: boolean = false;
   MatchModeOptions = FilterOperatorOptions;
 
   private userProfileService = inject(UserProfileService);
@@ -143,7 +143,7 @@ export class ViewUserComponent {
           throw new Error('Import failed!');
         })
       )
-      .subscribe((respond) => {
+      .subscribe(() => {
         this.LoadData();
         this.isVisible = false;
         this.userSelected = '';
